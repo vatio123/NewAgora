@@ -1,0 +1,10 @@
+<ion-view view-title="TOPICS">
+  <ion-content>
+    <ion-list>
+      <ion-item ng-repeat="topic in topics"> <!-- href="#/app/playlists/{{playlist.id}}"-->
+        <h2>{{topic.title}}</h2>
+        <strong>{{topic.id}} questions</strong>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
