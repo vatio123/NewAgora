@@ -30,6 +30,6 @@ starterApp.controller('PlaylistsCtrl', function($scope, accessService, $statePar
         }
       }
     });
-  }
+  };
     $scope.loadInitData();
 });
