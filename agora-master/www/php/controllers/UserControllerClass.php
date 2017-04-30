@@ -60,6 +60,12 @@ class UserControllerClass implements ControllerInterface {
             case 10060:
                 $outPutData = $this->llistAll();
                 break;
+            case 10070:
+                $outPutData = $this->findByPK();
+                break;
+            case 10080:
+                $outPutData = $this->llistAll();
+                break;
             default:
                 $errors = array();
                 $outPutData[0] = false;
@@ -70,6 +76,33 @@ class UserControllerClass implements ControllerInterface {
         }
         return $outPutData;
     }
+    
+    private function findByPK() {
+        //Films modification
+        $usersArray = json_decode(stripslashes($this->getJsonData()));
+        $outPutData = array();
+        $outPutData[] = true;
+        foreach ($usersArray as $userObj) {
+            $user = new User();
+            $user->setAll($userObj->nickname, $userObj->userscore, $userObj->firstname, $userObj->lastname, $userObj->email, $userObj->password, $userObj->postalcode);
+            UserADO::findByNickname($user);
+        }
+        return $outPutData;
+    }
+    
+    private function findByEmail() {
+        //Films modification
+        $usersArray = json_decode(stripslashes($this->getJsonData()));
+        $outPutData = array();
+        $outPutData[] = true;
+        foreach ($usersArray as $userObj) {
+            $user = new User();
+            $user->setAll($userObj->nickname, $userObj->userscore, $userObj->firstname, $userObj->lastname, $userObj->email, $userObj->password, $userObj->postalcode);
+            UserADO::findByEmail($user);
+        }
+        return $outPutData;
+    }
+    
 
     private function create() {
         $userObj = json_decode(stripslashes($this->getJsonData()));
