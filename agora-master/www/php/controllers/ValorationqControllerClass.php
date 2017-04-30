@@ -1,14 +1,14 @@
 <?php
 
 /**
- * QuestionController class
- * it controls question's model server part of the application
+ * ValorationqController class
+ * it controls valorationq's model server part of the application
  */
 require_once "ControllerInterface.php";
-require_once "../model/Question.class.php";
-require_once "../model/persist/QuestionADO.php";
+require_once "../model/Valorationq.class.php";
+require_once "../model/persist/ValorationqADO.php";
 
-class QuestionControllerClass implements ControllerInterface {
+class ValorationqControllerClass implements ControllerInterface {
 
     private $action;
     private $jsonData;
@@ -58,7 +58,7 @@ class QuestionControllerClass implements ControllerInterface {
                 $outPutData[0] = false;
                 $errors[] = "Sorry, there has been an error. Try later";
                 $outPutData[] = $errors;
-                error_log("Action not correct in QuestionControllerClass, value: " . $this->getAction());
+                error_log("Action not correct in ValorationqControllerClass, value: " . $this->getAction());
                 break;
         }
         return $outPutData;
@@ -68,19 +68,19 @@ class QuestionControllerClass implements ControllerInterface {
         $outPutData = array();
         $outPutData[] = true;
         $errors = array();
-        $listQuestions = QuestionADO::findAll();
-        if (count($listQuestions) == 0) {
+        $listValorationqs = ValorationqADO::findAll();
+        if (count($listValorationqs) == 0) {
             $outPutData[0] = false;
-            $errors[] = "No questions found in database";
+            $errors[] = "No valorationqs found in database";
         } else {
-            $questionsArray = array();
+            $valorationqsArray = array();
 
-            foreach ($listQuestions as $question) {
-                $questionsArray[] = $question->getAll();
+            foreach ($listValorationqs as $valorationq) {
+                $valorationqsArray[] = $valorationq->getAll();
             }
         }
         if ($outPutData[0]) {
-            $outPutData[] = $questionsArray;
+            $outPutData[] = $valorationqsArray;
         } else {
             $outPutData[] = $errors;
         }
@@ -88,14 +88,14 @@ class QuestionControllerClass implements ControllerInterface {
     }
 
     private function create() {
-        $questionObj = json_decode(stripslashes($this->getJsonData()));
-        $question = new Question();
-        $question->setAll(0, $questionObj->nickname, $questionObj->topicname, $questionObj->input, $questionObj->date);
+        $valorationqObj = json_decode(stripslashes($this->getJsonData()));
+        $valorationq = new Valorationq();
+        $valorationq->setAll(0, $valorationqObj->nickname, $valorationqObj->idquestion, $valorationqObj->valoration, $valorationqObj->date);
         $outPutData = array();
         $outPutData[] = true;
-        $question->setQuestionId(QuestionADO::create($question));
-        //the senetnce returns de nickname of the question inserted
-        $outPutData[] = array($question->getAll());
+        $valorationq->setValorationqId(ValorationqADO::create($valorationq));
+        //the senetnce returns de nickname of the valorationq inserted
+        $outPutData[] = array($valorationq->getAll());
         return $outPutData;
     }
 
@@ -103,39 +103,39 @@ class QuestionControllerClass implements ControllerInterface {
 
     private function update() {
         //Films modification
-        $questionsArray = json_decode(stripslashes($this->getJsonData()));
+        $valorationqsArray = json_decode(stripslashes($this->getJsonData()));
         $outPutData = array();
         $outPutData[] = true;
-        foreach ($questionsArray as $questionObj) {
-            $question = new Question();
-            $question->setAll($questionObj->idquestion, $questionObj->nickname, $questionObj->topicname, $questionObj->input, $questionObj->date);
-            QuestionADO::update($question);
+        foreach ($valorationqsArray as $valorationqObj) {
+            $valorationq = new Valorationq();
+            $valorationq->setAll($valorationqObj->idvalorationq, $valorationqObj->nickname, $valorationqObj->idquestion, $valorationqObj->valoration, $valorationqObj->date);
+            ValorationqADO::update($valorationq);
         }
         return $outPutData;
     }
 
     private function delete() {
         //Films modification
-        $questionsArray = json_decode(stripslashes($this->getJsonData()));
+        $valorationqsArray = json_decode(stripslashes($this->getJsonData()));
         $outPutData = array();
         $outPutData[] = true;
-        foreach ($questionsArray as $questionObj) {
-            $question = new Question();
-            $question->setAll($questionObj->idquestion, $questionObj->nickname, $questionObj->topicname, $questionObj->input, $questionObj->date);
-            QuestionADO::delete($question);
+        foreach ($valorationqsArray as $valorationqObj) {
+            $valorationq = new Valorationq();
+            $valorationq->setAll($valorationqObj->idvalorationq, $valorationqObj->nickname, $valorationqObj->idquestion, $valorationqObj->valoration, $valorationqObj->date);
+            ValorationqADO::delete($valorationq);
         }
         return $outPutData;
     }
 
     private function findByPK() {
         //Films modification
-        $questionsArray = json_decode(stripslashes($this->getJsonData()));
+        $valorationqsArray = json_decode(stripslashes($this->getJsonData()));
         $outPutData = array();
         $outPutData[] = true;
-        foreach ($questionsArray as $questionObj) {
-            $question = new Question();
-            $question->setAll($questionObj->idquestion, $questionObj->nickname, $questionObj->topicname, $questionObj->input, $questionObj->date);
-            QuestionADO::findByPK($question);
+        foreach ($valorationqsArray as $valorationqObj) {
+            $valorationq = new Valorationq();
+            $valorationq->setAll($valorationqObj->idvalorationq, $valorationqObj->nickname, $valorationqObj->idquestion, $valorationqObj->valoration, $valorationqObj->date);
+            ValorationqADO::findByPK($valorationq);
         }
         return $outPutData;
     }

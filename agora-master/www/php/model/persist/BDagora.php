@@ -27,7 +27,7 @@ class DBConnect {
         $this->server = 'localhost';
         $this->dataBase = 'daw1704';
         $this->user = 'root';
-        $this->password = '';
+        $this->password = 'alumne';
     }
 
     /* Evitem el clonatge de l'obejcte: Patró Singleton */

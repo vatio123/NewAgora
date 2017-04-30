@@ -1,14 +1,14 @@
 <?php
 
 /**
- * QuestionController class
- * it controls question's model server part of the application
+ * ReportaController class
+ * it controls reporta's model server part of the application
  */
 require_once "ControllerInterface.php";
-require_once "../model/Question.class.php";
-require_once "../model/persist/QuestionADO.php";
+require_once "../model/Reporta.class.php";
+require_once "../model/persist/ReportaADO.php";
 
-class QuestionControllerClass implements ControllerInterface {
+class ReportaControllerClass implements ControllerInterface {
 
     private $action;
     private $jsonData;
@@ -58,7 +58,7 @@ class QuestionControllerClass implements ControllerInterface {
                 $outPutData[0] = false;
                 $errors[] = "Sorry, there has been an error. Try later";
                 $outPutData[] = $errors;
-                error_log("Action not correct in QuestionControllerClass, value: " . $this->getAction());
+                error_log("Action not correct in ReportaControllerClass, value: " . $this->getAction());
                 break;
         }
         return $outPutData;
@@ -68,34 +68,38 @@ class QuestionControllerClass implements ControllerInterface {
         $outPutData = array();
         $outPutData[] = true;
         $errors = array();
-        $listQuestions = QuestionADO::findAll();
-        if (count($listQuestions) == 0) {
+        $listReportas = ReportaADO::findAll();
+        if (count($listReportas) == 0) {
             $outPutData[0] = false;
-            $errors[] = "No questions found in database";
+            $errors[] = "No reportas found in database";
         } else {
-            $questionsArray = array();
+            $reportasArray = array();
 
-            foreach ($listQuestions as $question) {
-                $questionsArray[] = $question->getAll();
+            foreach ($listReportas as $reporta) {
+                $reportasArray[] = $reporta->getAll();
             }
         }
         if ($outPutData[0]) {
-            $outPutData[] = $questionsArray;
+            $outPutData[] = $reportasArray;
         } else {
             $outPutData[] = $errors;
         }
         return $outPutData;
     }
-
+/*private $idreport;
+    private $nickname;
+    private $idanswer;
+    private $reporttext;
+    private $date;*/
     private function create() {
-        $questionObj = json_decode(stripslashes($this->getJsonData()));
-        $question = new Question();
-        $question->setAll(0, $questionObj->nickname, $questionObj->topicname, $questionObj->input, $questionObj->date);
+        $reportaObj = json_decode(stripslashes($this->getJsonData()));
+        $reporta = new Reporta();
+        $reporta->setAll(0, $reportaObj->nickname, $reportaObj->idanswer, $reportaObj->reporttext, $reportaObj->date);
         $outPutData = array();
         $outPutData[] = true;
-        $question->setQuestionId(QuestionADO::create($question));
-        //the senetnce returns de nickname of the question inserted
-        $outPutData[] = array($question->getAll());
+        $reporta->setReportaId(ReportaADO::create($reporta));
+        //the senetnce returns de nickname of the reporta inserted
+        $outPutData[] = array($reporta->getAll());
         return $outPutData;
     }
 
@@ -103,39 +107,39 @@ class QuestionControllerClass implements ControllerInterface {
 
     private function update() {
         //Films modification
-        $questionsArray = json_decode(stripslashes($this->getJsonData()));
+        $reportasArray = json_decode(stripslashes($this->getJsonData()));
         $outPutData = array();
         $outPutData[] = true;
-        foreach ($questionsArray as $questionObj) {
-            $question = new Question();
-            $question->setAll($questionObj->idquestion, $questionObj->nickname, $questionObj->topicname, $questionObj->input, $questionObj->date);
-            QuestionADO::update($question);
+        foreach ($reportasArray as $reportaObj) {
+            $reporta = new Reporta();
+            $reporta->setAll($reportaObj->idreport, $reportaObj->nickname, $reportaObj->idanswer, $reportaObj->reporttext, $reportaObj->date);
+            ReportaADO::update($reporta);
         }
         return $outPutData;
     }
 
     private function delete() {
         //Films modification
-        $questionsArray = json_decode(stripslashes($this->getJsonData()));
+        $reportasArray = json_decode(stripslashes($this->getJsonData()));
         $outPutData = array();
         $outPutData[] = true;
-        foreach ($questionsArray as $questionObj) {
-            $question = new Question();
-            $question->setAll($questionObj->idquestion, $questionObj->nickname, $questionObj->topicname, $questionObj->input, $questionObj->date);
-            QuestionADO::delete($question);
+        foreach ($reportasArray as $reportaObj) {
+            $reporta = new Reporta();
+            $reporta->setAll($reportaObj->idreport, $reportaObj->nickname, $reportaObj->idanswer, $reportaObj->reporttext, $reportaObj->date);
+            ReportaADO::delete($reporta);
         }
         return $outPutData;
     }
 
     private function findByPK() {
         //Films modification
-        $questionsArray = json_decode(stripslashes($this->getJsonData()));
+        $reportasArray = json_decode(stripslashes($this->getJsonData()));
         $outPutData = array();
         $outPutData[] = true;
-        foreach ($questionsArray as $questionObj) {
-            $question = new Question();
-            $question->setAll($questionObj->idquestion, $questionObj->nickname, $questionObj->topicname, $questionObj->input, $questionObj->date);
-            QuestionADO::findByPK($question);
+        foreach ($reportasArray as $reportaObj) {
+            $reporta = new Reporta();
+            $reporta->setAll($reportaObj->idreport, $reportaObj->nickname, $reportaObj->idanswer, $reportaObj->reporttext, $reportaObj->date);
+            ReportaADO::findByPK($reporta);
         }
         return $outPutData;
     }
