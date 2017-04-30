@@ -5,9 +5,9 @@
  * author  norosa@programmer.net
  * version 2017/04
  */
-require_once "BDvnicknameeoclub.php";
+require_once "BDagora.php";
 require_once "EntityInterfaceADO.php";
-require_once "../model/User.php";
+require_once "../model/User.class.php";
 
 class UserADO implements EntityInterfaceADO {
 
@@ -20,7 +20,7 @@ class UserADO implements EntityInterfaceADO {
     private static $colNameEmail = "email";
     private static $colNamePassword = "password";
     private static $colNamePostalcode = "postalcode";
-  
+
 
     //---Databese management section-----------------------
     /**
@@ -57,7 +57,7 @@ class UserADO implements EntityInterfaceADO {
         $email = $res[UserADO::$colNameEmail];
         $password = $res[UserADO::$colNamePassword];
         $postalcode = $res[UserADO::$colNamePostalcode];
-  
+
         //Object construction
         $entity = new User();
         $entity->setNickname($nickname);
@@ -133,8 +133,8 @@ class UserADO implements EntityInterfaceADO {
      */
     public static function findByNickAndPass($user) {
         //$cons = "select * from `".UserADO::$tableName."` where ".UserADO::$colNameNick." = \"".$user->getNick()."\" and ".UserADO::$colNameEmail." = \"".$user->getEmail()."\"";
-        $cons = "select * from `" . UserADO::$tableName . "` where " . UserADO::$colNameNick . " = ? and " . UserADO::$colNamePassword . " = ?";
-        $arrayValues = [$user->getNick(), $user->getPassword()];
+        $cons = "select * from `" . UserADO::$tableName . "` where " . UserADO::$colNameNick . " = ? and " . UserADO::$colNameEmail . " = ?";
+        $arrayValues = [$user->getNick(), $user->getEmail()];
         return UserADO::findByQuery($cons, $arrayValues);
     }
 
@@ -162,8 +162,8 @@ class UserADO implements EntityInterfaceADO {
             print "Error connecting database: " . $e->getMessage() . " ";
             die();
         }
-        $cons = "insert into " . UserADO::$tableName . " (`userscore`,`firstname`,`lastname`,`email`,`password`,`postalcode`) values (?, ?, ?, ?, ?, ?)";
-        $arrayValues = [$user->getUserscore(), $user->getFirstname(), $user->getLastname(), $user->getEmail(), $user->getPassword(), $user->getPostalcode()];
+        $cons = "insert into " . UserADO::$tableName . " (`nickname`,`userscore`,`firstname`,`lastname`,`email`,`password`,`postalcode`) values (?, ?, ?, ?, ?, ?, ?)";
+        $arrayValues = [$user->getNickname(), $user->getUserscore(), $user->getFirstname(), $user->getLastname(), $user->getEmail(), sha1($user->getPassword()), $user->getPostalcode()];
         $nickname = $conn->executionInsert($cons, $arrayValues);
         $user->setNickname($nickname);
         return $user->getNickname();

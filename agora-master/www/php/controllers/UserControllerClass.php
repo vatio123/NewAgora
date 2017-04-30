@@ -5,7 +5,7 @@
  * it controls the user's model server part of the application
  */
 require_once "ControllerInterface.php";
-require_once "../model/User.php";
+require_once "../model/User.class.php";
 require_once "../model/persist/UserADO.php";
 
 class UserControllerClass implements ControllerInterface {
@@ -54,10 +54,10 @@ class UserControllerClass implements ControllerInterface {
                 session_destroy();
                 $outPutData[0] = true;
                 break;
-            case 10040:
+            case 10050:
                 $outPutData = $this->delete();
                 break;
-            case 10040:
+            case 10060:
                 $outPutData = $this->llistAll();
                 break;
             default:
@@ -74,7 +74,7 @@ class UserControllerClass implements ControllerInterface {
     private function create() {
         $userObj = json_decode(stripslashes($this->getJsonData()));
         $user = new User();
-        $user->setAll($userObj->nickname, $userObj->userscore, $userObj->firstname, $userObj->lastname, $userObj->email, sha1($userObj->password), $userObj->postalcode);
+        $user->setAll($userObj->nickname, $userObj->userscore, $userObj->firstname, $userObj->lastname, $userObj->email, $userObj->password, $userObj->postalcode);
         $outPutData = array();
         $outPutData[] = true;
         $user->setNickname(UserADO::create($user));
@@ -90,12 +90,12 @@ class UserControllerClass implements ControllerInterface {
         $outPutData[] = true;
         foreach ($usersArray as $userObj) {
             $user = new User();
-            $user->setAll($userObj->nickname, $userObj->userscore, $userObj->firstname, $userObj->lastname, $userObj->email, sha1($userObj->password), $userObj->postalcode);
+            $user->setAll($userObj->nickname, $userObj->userscore, $userObj->firstname, $userObj->lastname, $userObj->email, $userObj->password, $userObj->postalcode);
             UserADO::update($user);
         }
         return $outPutData;
     }
-    
+
     private function delete() {
         //Films modification
         $usersArray = json_decode(stripslashes($this->getJsonData()));
@@ -103,7 +103,7 @@ class UserControllerClass implements ControllerInterface {
         $outPutData[] = true;
         foreach ($usersArray as $userObj) {
             $user = new User();
-            $user->setAll($userObj->nickname, $userObj->userscore, $userObj->firstname, $userObj->lastname, $userObj->email, sha1($userObj->password), $userObj->postalcode);
+            $user->setAll($userObj->nickname, $userObj->userscore, $userObj->firstname, $userObj->lastname, $userObj->email, $userObj->password, $userObj->postalcode);
             UserADO::delete($user);
         }
         return $outPutData;
@@ -118,7 +118,7 @@ class UserControllerClass implements ControllerInterface {
         $outPutData[0] = true;
         $user = new User();
         $user->setNickname($userObj->nickname);
-        $user->setPassword(sha1($userObj->password));
+        $user->setPassword($userObj->password);
         $userList = UserADO::findByNicknameAndPass($user);
         if (count($userList) == 0) {
             $outPutData[0] = false;
@@ -147,7 +147,6 @@ class UserControllerClass implements ControllerInterface {
         }
         return $outPutData;
     }
-
 
 }
 

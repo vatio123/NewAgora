@@ -5,7 +5,7 @@
  * it controls question's model server part of the application
  */
 require_once "ControllerInterface.php";
-require_once "../model/Question.php";
+require_once "../model/Question.class.php";
 require_once "../model/persist/QuestionADO.php";
 
 class QuestionControllerClass implements ControllerInterface {
@@ -58,12 +58,12 @@ class QuestionControllerClass implements ControllerInterface {
                 $outPutData[0] = false;
                 $errors[] = "Sorry, there has been an error. Try later";
                 $outPutData[] = $errors;
-                error_log("Action not correct in FilmControllerClass, value: " . $this->getAction());
+                error_log("Action not correct in QuestionControllerClass, value: " . $this->getAction());
                 break;
         }
         return $outPutData;
     }
-    
+
     private function llistAll() {
         $outPutData = array();
         $outPutData[] = true;
@@ -86,7 +86,7 @@ class QuestionControllerClass implements ControllerInterface {
         }
         return $outPutData;
     }
-    
+
     private function create() {
         $questionObj = json_decode(stripslashes($this->getJsonData()));
         $question = new Question();
@@ -98,9 +98,9 @@ class QuestionControllerClass implements ControllerInterface {
         $outPutData[] = array($question->getAll());
         return $outPutData;
     }
-    
-    
-    
+
+
+
     private function update() {
         //Films modification
         $questionsArray = json_decode(stripslashes($this->getJsonData()));
@@ -113,7 +113,7 @@ class QuestionControllerClass implements ControllerInterface {
         }
         return $outPutData;
     }
-    
+
     private function delete() {
         //Films modification
         $questionsArray = json_decode(stripslashes($this->getJsonData()));
@@ -126,7 +126,7 @@ class QuestionControllerClass implements ControllerInterface {
         }
         return $outPutData;
     }
-    
+
     private function findByPK() {
         //Films modification
         $questionsArray = json_decode(stripslashes($this->getJsonData()));
@@ -140,7 +140,7 @@ class QuestionControllerClass implements ControllerInterface {
         return $outPutData;
     }
 
-    
+
 }
 
 ?>

@@ -41,6 +41,16 @@ starterApp.config(function($stateProvider, $urlRouterProvider) {
     }
   })
 
+  .state('app.signin', {
+    url: '/signin',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/signin.html',
+        controller: 'UserCtrl'
+      }
+    }
+  })
+
   .state('app.browse', {
       url: '/browse',
       views: {

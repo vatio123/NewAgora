@@ -1,6 +1,11 @@
-<ion-view view-title="ÁGORA">
+<ion-view>
+  <ion-nav-title>
+    <h2>ΑΓΟΡΑ</h2>
+</ion-nav-title>
   <ion-content>
     <ion-list>
+      <br/>
+      <br/>
       <ion-item ng-repeat="question in questions" href="#/app/playlists/{{question.id}}">
         <h2>{{question.input}}</h2>
         <strong>Author: {{question.nick}}</strong>

@@ -3,7 +3,6 @@
 /* Classe encarregada de gestionar las connexions a la base de dades */
 
 class DBConnect {
-
     private $server;
     private $user;
     private $password;
@@ -23,11 +22,10 @@ class DBConnect {
     /* Mètode per establir els paràmetres de la connexió */
 
     private function setConnection() {
-
         $this->server = 'localhost';
         $this->dataBase = 'daw1704';
-        $this->user = 'daw1704';
-        $this->password = 'zFsv@qre';
+        $this->user = 'root';//daw1704
+        $this->password = 'alumne';//zFsv@qre
     }
 
     /* Evitem el clonatge de l'obejcte: Patró Singleton */
@@ -37,17 +35,14 @@ class DBConnect {
     }
 
     /* Funció encarregada de crear, si s'escau, l'objete. Aquesta és la funció que hem de cridar des de fora de la classe per a instanciar l'objecte i així poder fer servir els seus mètodes */
-
     public static function getInstance() {
         if (!(self::$_instance instanceof self)) {
             self::$_instance = new self();
         }
-
         return self::$_instance;
     }
 
     /* Realitza la connexió a la base de dades. */
-
     private function connection() {
         try {
             $this->link = new PDO('mysql:dbname=' . $this->dataBase . ';host=' . $this->server, $this->user, $this->password, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
@@ -72,7 +67,6 @@ class DBConnect {
         } else {
             $this->stmt = null;
         }
-
         return $this->stmt; //retorna la consulta select o el número de files afectades
     }
 
@@ -91,7 +85,6 @@ class DBConnect {
         } else {
             $id = null;
         }
-
         return $id;
     }
 

@@ -1,67 +1,53 @@
-function Answer() {
-    //Attributes declaration
-    this.idanswer;
-    this.nickname;
-    this.idquestion;
-    this.input;
-    this.date;
-
-    //Methods declaration
-    this.construct = function (idanswer, nickname, idquestion, input, date){
-        this.setIdanswer(idanswer);
-        this.setNickname(nickname);
-        this.setIdquestion(idquestion);
-        this.setInput(input);
-        this.setDate(date);
-    };
-
-    this.setIdanswer = function (idanswer) {
-        this.idanswer = idanswer;
-    };
-    this.setNickname = function (nickname) {
-        this.nickname = nickname;
-    };
-    this.setIdquestion = function (idquestion) {
-        this.idquestion = idquestion;
-    };
-    this.setInput = function (input) {
-        this.input = input;
-    };
-    this.setDate = function (date) {
-        this.date = date;
-    };
+function Answer ()
+{
+	//Attributes declaration
+	this.idAnswer;
+  this.idQuestion;
+	this.nick;
+	this.topicName;
+	this.input;
+	this.dateIn;
 
 
-    this.getIdanswer = function () {
-        return this.idanswer;
-    };
-    this.getNickname = function () {
-        return this.nickname;
-    };
-    this.getIdquestion = function () {
-        return this.idquestion;
-    };
-    this.getInput = function () {
-        return this.input;
-    };
-    this.getDate = function () {
-        return this.date;
-    };
+	//Methods declaration
+	this.construct = function (idAnswer,idQuestion,nick,topicName, input,dateIn)
+	{
+		this.setIdAnswer(idAnswer);
+		this.setNick(nick);
+		this.setTopicName(topicName);
+		this.setInput(input);
+		this.setDateIn(dateIn);
+	}
 
-    /*this.arrayToString = function (arrayReviewObj)
-    {
-        var reviewString = "";
-        $.each(arrayReviewObj, function (index, review) {
-            reviewString += "stock number " + (index + 1) + ":" + review.toString() + "\n";
-        });
-        return reviewString;
+	this.setIdAnswer = function (idAnswer){this.idAnswer=idAnswer;}
+	this.setInput = function (input){this.input=input;}
+	this.setDateIn = function (dateIn){this.dateIn=dateIn;}
+	this.setNick = function (nick){this.nick=nick;}
+	this.setTopicName = function (topicName){this.topicName=topicName;}
+  this.setIdQuestion = function (idQuestion){this.idQuestion = idQuestion;}
 
-    };
+	this.getIdAnswer = function () {return this.idAnswer;}
+	this.getInput = function () {return this.input;}
+	this.getDateIn = function () {return this.dateIn;}
+	this.getNick = function () {return this.nick;}
+	this.getTopicName = function () {return this.topicName;}
+  this.getIdQuestion = function() {return this.idQuestion;}
 
-    this.toString = function ()
-    {
-        var reviewString = "REVIEW - ID=" + this.getId() + " RATE=" + this.getRate() + " OPINION=" + this.getOpinion();
-        reviewString += " EMAIL=" + this.getEmail();
-        return reviewString;
-    };*/
-} // END Answer class
+
+	this.arrayToString = function (arrayReview)
+	{
+		var reviewString ="";
+		$.each(arrayReview, function (index, review){
+			reviewString+="reiew number "+(index+1)+":"+review.toString()+"\n";
+		});
+		return reviewString;
+	}
+
+	this.toString = function ()
+	{
+		var reviewString ="idAnswer="+this.getIdAnswer()+" input="+this.getInput()+" dateIn="+this.getDateIn()+" nick="+this.getNick();
+		reviewString +=" topicName="+this.getTopicName()+" idQuestion="+this.getIdQuestion();
+
+		return reviewString;
+	}
+}
