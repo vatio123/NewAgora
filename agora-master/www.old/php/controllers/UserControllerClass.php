@@ -54,10 +54,16 @@ class UserControllerClass implements ControllerInterface {
                 session_destroy();
                 $outPutData[0] = true;
                 break;
-            case 10040:
+            case 10050:
                 $outPutData = $this->delete();
                 break;
-            case 10040:
+            case 10060:
+                $outPutData = $this->llistAll();
+                break;
+            case 10070:
+                $outPutData = $this->findByPK();
+                break;
+            case 10080:
                 $outPutData = $this->llistAll();
                 break;
             default:
@@ -71,10 +77,37 @@ class UserControllerClass implements ControllerInterface {
         return $outPutData;
     }
 
+    private function findByPK() {
+        //Films modification
+        $usersArray = json_decode(stripslashes($this->getJsonData()));
+        $outPutData = array();
+        $outPutData[] = true;
+        foreach ($usersArray as $userObj) {
+            $user = new User();
+            $user->setAll($userObj->nickname, $userObj->userscore, $userObj->firstname, $userObj->lastname, $userObj->email, $userObj->password, $userObj->postalcode);
+            UserADO::findByNickname($user);
+        }
+        return $outPutData;
+    }
+
+    private function findByEmail() {
+        //Films modification
+        $usersArray = json_decode(stripslashes($this->getJsonData()));
+        $outPutData = array();
+        $outPutData[] = true;
+        foreach ($usersArray as $userObj) {
+            $user = new User();
+            $user->setAll($userObj->nickname, $userObj->userscore, $userObj->firstname, $userObj->lastname, $userObj->email, $userObj->password, $userObj->postalcode);
+            UserADO::findByEmail($user);
+        }
+        return $outPutData;
+    }
+
+
     private function create() {
         $userObj = json_decode(stripslashes($this->getJsonData()));
         $user = new User();
-        $user->setAll($userObj->nickname, $userObj->userscore, $userObj->firstname, $userObj->lastname, $userObj->email, sha1($userObj->password), $userObj->postalcode);
+        $user->setAll($userObj->nickname, $userObj->userscore, $userObj->firstname, $userObj->lastname, $userObj->email, $userObj->password, $userObj->postalcode);
         $outPutData = array();
         $outPutData[] = true;
         $user->setNickname(UserADO::create($user));
@@ -90,12 +123,12 @@ class UserControllerClass implements ControllerInterface {
         $outPutData[] = true;
         foreach ($usersArray as $userObj) {
             $user = new User();
-            $user->setAll($userObj->nickname, $userObj->userscore, $userObj->firstname, $userObj->lastname, $userObj->email, sha1($userObj->password), $userObj->postalcode);
+            $user->setAll($userObj->nickname, $userObj->userscore, $userObj->firstname, $userObj->lastname, $userObj->email, $userObj->password, $userObj->postalcode);
             UserADO::update($user);
         }
         return $outPutData;
     }
-    
+
     private function delete() {
         //Films modification
         $usersArray = json_decode(stripslashes($this->getJsonData()));
@@ -103,7 +136,7 @@ class UserControllerClass implements ControllerInterface {
         $outPutData[] = true;
         foreach ($usersArray as $userObj) {
             $user = new User();
-            $user->setAll($userObj->nickname, $userObj->userscore, $userObj->firstname, $userObj->lastname, $userObj->email, sha1($userObj->password), $userObj->postalcode);
+            $user->setAll($userObj->nickname, $userObj->userscore, $userObj->firstname, $userObj->lastname, $userObj->email, $userObj->password, $userObj->postalcode);
             UserADO::delete($user);
         }
         return $outPutData;
@@ -118,8 +151,8 @@ class UserControllerClass implements ControllerInterface {
         $outPutData[0] = true;
         $user = new User();
         $user->setNickname($userObj->nickname);
-        $user->setPassword(sha1($userObj->password));
-        $userList = UserADO::findByNicknameAndPass($user);
+        $user->setPassword($userObj->password);
+        $userList = UserADO::findByNickAndPass($user);
         if (count($userList) == 0) {
             $outPutData[0] = false;
             $errors[] = "No user has found with these data";
@@ -147,7 +180,6 @@ class UserControllerClass implements ControllerInterface {
         }
         return $outPutData;
     }
-
 
 }
 

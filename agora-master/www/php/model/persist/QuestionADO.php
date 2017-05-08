@@ -47,7 +47,7 @@ class QuestionADO implements EntityInterface {
      */
     private static function fromResultSet($res) {
         //We get all the values form the query
-        $id = $res[QuestionADO::$colQuestionsIdQuestion];
+        $idquestion = $res[QuestionADO::$colQuestionsIdQuestion];
         $nick = $res[QuestionADO::$colQuestionsNickname];
         $topicName = $res[QuestionADO::$colQuestionsTopicname];
         $input = $res[QuestionADO::$colQuestionsInput];
@@ -55,7 +55,7 @@ class QuestionADO implements EntityInterface {
 
         //Object construction
         $entity = new Question();
-        $entity->setIdquestion($id);
+        $entity->setIdquestion($idquestion);
         $entity->setNickname($nick);
         $entity->setTopicname($topicName);
         $entity->setInput($input);
@@ -105,7 +105,7 @@ class QuestionADO implements EntityInterface {
         $arrayValues = [$object->getIdQuestion()];
         return QuestionADO::findByQuery($cons, $arrayValues);
     }
-    
+
     /**
      * findByNickname()
      * It runs a query and returns an object array
@@ -143,10 +143,10 @@ class QuestionADO implements EntityInterface {
             die();
         }
         $cons = "insert into " . QuestionADO::$tableQuestions . " (`nickname`,`topicname`,`input`,`date`) values (?, ?, ?, ?)";
-        $arrayValues = [ $object->getNickname(), $object->getInput(), new Date()];
+        $arrayValues = [$object->getNickname(), $object->getTopicname(), $object->getInput(), $object->getDate()];
         $id = $conn->executionInsert($cons, $arrayValues);
         $object->setIdquestion($id);
-        return $object->getIdQuestion();
+        return $object->getIdquestion();
     }
 
     /**

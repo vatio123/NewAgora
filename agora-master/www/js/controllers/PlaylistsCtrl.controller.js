@@ -1,6 +1,16 @@
-starterApp.controller('PlaylistsCtrl', function($scope, accessService, $stateParams) {
+starterApp.controller('PlaylistsCtrl', function($scope, accessService, $stateParams, $state) {
   $scope.questions =[];
-
+  $scope.insider;
+  $scope.insideQuestion = function(question){
+    console.log(question);
+    $scope.$parent.insiderDaddy=question;
+    //idquestion,nickname,topicname, input,dateIn
+    /*$scope.insider.construct(question.idquestion, question.nickname, question.topicname, question.input, question.dateIn);
+    alert($scope.insider.question.idquestion);
+    /*console.log($scope.insider);*/
+    $state.go('app.single');
+  }
+  
   $scope.loadInitData = function (){
     //Server conenction to verify user's data
     var promise = accessService.getData("php/controllers/MainController.php",
@@ -14,9 +24,9 @@ starterApp.controller('PlaylistsCtrl', function($scope, accessService, $statePar
         //id,idUser,dateReview, rate,description
         for (var i = 0; i < outputData[1].length; i++) {
           var question = new Question();
-          question.setIdQuestion(outputData[1][i].idquestion);
-          question.setNick(outputData[1][i].nickname);
-          question.setTopicName(outputData[1][i].topicname);
+          question.setIdquestion(outputData[1][i].idquestion);
+          question.setNickname(outputData[1][i].nickname);
+          question.setTopicname(outputData[1][i].topicname);
           question.setInput(outputData[1][i].input);
           question.setDateIn(outputData[1][i].date);
           $scope.questions.push(question);

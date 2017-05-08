@@ -16,7 +16,7 @@ class TopicADO implements EntityInterface {
     private static $tableTopics = "topics";
     private static $colTopicsTopicname = "topicname";
     private static $colTopicsMaintopic = "maintopic";
-   
+
 
     //topicname-maintopic-topicname-input-date
     //---Databese management section-----------------------
@@ -48,11 +48,11 @@ class TopicADO implements EntityInterface {
         //We get all the values form the query
         $topicname = $res[TopicADO::$colTopicsTopicname];
         $maintopic = $res[TopicADO::$colTopicsMaintopic];
-    
+
         //Object construction
         $entity = new Topic();
-        $entity->setIdtopic($topicname);
-        $entity->setmaintopic($maintopic);
+        $entity->setTopicname($topicname);
+        $entity->setMaintopic($maintopic);
         return $entity;
     }
 
@@ -98,7 +98,7 @@ class TopicADO implements EntityInterface {
         $arrayValues = [$object->getTopicname()];
         return TopicADO::findByQuery($cons, $arrayValues);
     }
-    
+
     /**
      * findBymaintopic()
      * It runs a query and returns an object array
@@ -171,7 +171,7 @@ class TopicADO implements EntityInterface {
             print "Error connecting database: " . $e->getMessage() . " ";
             die();
         }
-        $cons = "update `" . TopicADO::$tableTopics . "` set " .TopicADO::$colTopicsMaintopic . 
+        $cons = "update `" . TopicADO::$tableTopics . "` set " .TopicADO::$colTopicsMaintopic .
                 " =? where " . TopicADO::$colTopicsTopicname . " = ?";
         $arrayValues = [$object->getMaintopic(), $object->getTopicname() ];
         $conn->execution($cons, $arrayValues);

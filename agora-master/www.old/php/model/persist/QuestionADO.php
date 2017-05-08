@@ -6,7 +6,7 @@
  * version 2017/04
  */
 require_once "EntityInterfaceADO.php";
-require_once "BDConnect.php";
+require_once "BDagora.php";
 require_once "../model/Question.class.php";
 
 class QuestionADO implements EntityInterface {
@@ -14,7 +14,7 @@ class QuestionADO implements EntityInterface {
     //----------Data base Values---------------------------------------
     private static $tableQuestions = "questions";
     private static $colQuestionsIdQuestion = "idquestion";
-    private static $colQuestionsNickName = "nickname";
+    private static $colQuestionsNickname = "nickname";
     private static $colQuestionsTopicname = "topicname";
     private static $colQuestionsInput = "input";
     private static $colQuestionsDate = "date";
@@ -48,15 +48,15 @@ class QuestionADO implements EntityInterface {
     private static function fromResultSet($res) {
         //We get all the values form the query
         $id = $res[QuestionADO::$colQuestionsIdQuestion];
-        $nick = $res[QuestionADO::$colQuestionsNickName];
+        $nick = $res[QuestionADO::$colQuestionsNickname];
         $topicName = $res[QuestionADO::$colQuestionsTopicname];
         $input = $res[QuestionADO::$colQuestionsInput];
         $date = $res[QuestionADO::$colQuestionsDate];
 
         //Object construction
         $entity = new Question();
-        $entity->setQuestionId($id);
-        $entity->setNick($nick);
+        $entity->setIdquestion($id);
+        $entity->setNickname($nick);
         $entity->setTopicname($topicName);
         $entity->setInput($input);
         $entity->setDate($date);
@@ -88,34 +88,34 @@ class QuestionADO implements EntityInterface {
      * @param id
      * @return object with the query results
      */
-    public static function findByPK($review) {
+    public static function findByPK($object) {
         $cons = "select * from `" . QuestionADO::$tableQuestions . "` where " . QuestionADO::$colQuestionsIdQuestion . " = ?";
-        $arrayValues = [$review->getIdQuestion()];
+        $arrayValues = [$object->getIdQuestion()];
         return QuestionADO::findByQuery($cons, $arrayValues);
     }
 
     /**
-     * findByIdQuestionClient()
+     * findByIdQuestion()
      * It runs a query and returns an object array
      * @param name
      * @return object with the query results
      */
-    public static function findByIdQuestionClient($review) {
-        $cons = "select * from `" . QuestionADO::$tableQuestions . "` where " . QuestionADO::$colQuestionsIdQuestionClient . " = ?";
-        $arrayValues = [$review->getIdQuestionClient()];
+    public static function findByIdQuestion($object) {
+        $cons = "select * from `" . QuestionADO::$tableQuestions . "` where " . QuestionADO::$colQuestionsIdQuestion . " = ?";
+        $arrayValues = [$object->getIdQuestion()];
         return QuestionADO::findByQuery($cons, $arrayValues);
     }
-
+    
     /**
-     * findByIdQuestionUser()
+     * findByNickname()
      * It runs a query and returns an object array
      * @param name
      * @return object with the query results
      */
-    public static function findByIdQuestionUser($review) {
-        $cons = "select * from `" . QuestionADO::$tableQuestions . "` where " . QuestionADO::$colQuestionsIdQuestionUser . " = ?";
-        $arrayValues = [$review->getIdQuestionUser()];
-        return QuestionADO::findByQuery($cons, $arrayValues);
+    public static function findByNickname($object) {
+        $cons = "select * from `" . AnswerADO::$tableQuestions . "` where " . AnswerADO::$colQuestionsNickname . " = ?";
+        $arrayValues = [$object->getNickname()];
+        return AnswerADO::findByQuery($cons, $arrayValues);
     }
 
     /**
@@ -134,7 +134,7 @@ class QuestionADO implements EntityInterface {
      * create()
      * insert a new row into the database
      */
-    public function create($review) {
+    public function create($object) {
         //Connection with the database
         try {
             $conn = DBConnect::getInstance();
@@ -142,18 +142,18 @@ class QuestionADO implements EntityInterface {
             print "Error connecting database: " . $e->getMessage() . " ";
             die();
         }
-        $cons = "insert into " . QuestionADO::$tableQuestions . " (`name`,`description`) values (?, ?)";
-        $arrayValues = [$review->getIdQuestionUser(), $review->getNickName(), $review->getRate(), $review->getTopicname()];
+        $cons = "insert into " . QuestionADO::$tableQuestions . " (`nickname`,`topicname`,`input`,`date`) values (?, ?, ?, ?)";
+        $arrayValues = [ $object->getNickname(), $object->getInput(), new Date()];
         $id = $conn->executionInsert($cons, $arrayValues);
-        $review->setIdQuestion($id);
-        return $review->getIdQuestion();
+        $object->setIdquestion($id);
+        return $object->getIdQuestion();
     }
 
     /**
      * delete()
      * it deletes a row from the database
      */
-    public function delete($review) {
+    public function delete($object) {
         //Connection with the database
         try {
             $conn = DBConnect::getInstance();
@@ -162,7 +162,7 @@ class QuestionADO implements EntityInterface {
             die();
         }
         $cons = "delete from `" . QuestionADO::$tableQuestions . "` where " . QuestionADO::$colQuestionsIdQuestion . " = ?";
-        $arrayValues = [$review->getIdQuestion()];
+        $arrayValues = [$object->getIdQuestion()];
         $conn->execution($cons, $arrayValues);
     }
 
@@ -170,7 +170,7 @@ class QuestionADO implements EntityInterface {
      * update()
      * it updates a row of the database
      */
-    public function update($review) {
+    public function update($object) {
         //Connection with the database
         try {
             $conn = DBConnect::getInstance();
@@ -178,14 +178,14 @@ class QuestionADO implements EntityInterface {
             print "Error connecting database: " . $e->getMessage() . " ";
             die();
         }
-        $cons = "update `" . QuestionADO::$tableQuestions . "` set " . QuestionADO::$colQuestionsIdQuestionUser . " = ?," . QuestionADO::$colQuestionsNickName . " = ?," .
-                QuestionADO::$colQuestionsRate . " = ?, " . QuestionADO::$colQuestionsTopicname . " =? where " . QuestionADO::$colQuestionsIdQuestion . " = ?";
-        $arrayValues = [$review->getIdQuestionUser(), $review->getNickName(), $review->getRate(), $review->getTopicname(), $review->getIdQuestion()];
+        $cons = "update `" . QuestionADO::$tableQuestions . "` set " . QuestionADO::$colQuestionsNickname . " = ?," .
+                QuestionADO::$colQuestionsTopicname . " = ?, " . QuestionADO::$colQuestionsInput . " = ?". QuestionADO::$colQuestionsDate . " =? where " . QuestionADO::$colQuestionsIdQuestion . " = ?";
+        $arrayValues = [$object->getIdQuestion(), $object->getNickname(), $object->getTopicname(), $object->getInput(), $object->getDate(), $object->getIdQuestion()];
         $conn->execution($cons, $arrayValues);
     }
 
     /*public function toString() {
-        $toString .= "QuestionADO[id=" . $this->id . "][idUser=" . $this->idUser . "][name=" . $this->name . "][desciption=" . $this->desciption . "]";
+        $toString .= "QuestionADO[id=" . $this->id . "][id=" . $this->id . "][name=" . $this->name . "][desciption=" . $this->desciption . "]";
         return $toString;
     }*/
 

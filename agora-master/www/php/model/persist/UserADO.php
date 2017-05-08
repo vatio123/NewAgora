@@ -133,8 +133,8 @@ class UserADO implements EntityInterfaceADO {
      */
     public static function findByNickAndPass($user) {
         //$cons = "select * from `".UserADO::$tableName."` where ".UserADO::$colNameNick." = \"".$user->getNick()."\" and ".UserADO::$colNameEmail." = \"".$user->getEmail()."\"";
-        $cons = "select * from `" . UserADO::$tableName . "` where " . UserADO::$colNameNick . " = ? and " . UserADO::$colNameEmail . " = ?";
-        $arrayValues = [$user->getNick(), $user->getEmail()];
+        $cons = "select * from `" . UserADO::$tableName . "` where " . UserADO::$colNameNickname . " = ? and " . UserADO::$colNamePassword . " = ?";
+        $arrayValues = [$user->getNickname(), sha1($user->getPassword())];
         return UserADO::findByQuery($cons, $arrayValues);
     }
 

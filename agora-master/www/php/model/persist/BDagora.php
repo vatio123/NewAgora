@@ -33,7 +33,7 @@ class DBConnect {
     /* Evitem el clonatge de l'obejcte: Patró Singleton */
 
     private function __clone() {
-        
+
     }
 
     /* Funció encarregada de crear, si s'escau, l'objete. Aquesta és la funció que hem de cridar des de fora de la classe per a instanciar l'objecte i així poder fer servir els seus mètodes */

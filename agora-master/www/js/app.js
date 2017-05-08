@@ -71,11 +71,11 @@ starterApp.config(function($stateProvider, $urlRouterProvider) {
     })
 
   .state('app.single', {
-    url: '/playlists/:playlistId',
+    url: '/inside_question',
     views: {
       'menuContent': {
         templateUrl: 'templates/playlist.html',
-        controller: 'PlaylistCtrl'
+        controller: 'InsideQuestionCtrl'
       }
     }
   });

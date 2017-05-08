@@ -1,82 +1,50 @@
-function Question() {
-    //Attributes declaration
-    this.idquestion;
-    this.nickname;
-    this.topicname;
-    this.input;
-    this.date;
-
-    //Methods declaration
-    this.construct = function (idquestion, nickname, topicname, input, date) {
-        this.setIdquestion(idquestion);
-        this.setNickname(nickname);
-        this.setTopicname(topicname);
-        this.setInput(input);
-        this.setDate(date);
-    };
-
-    // Getter and setter
-    this.setIdquestion = function (idquestion) {
-        this.idquestion = idquestion;
-    };
-    this.setNickname = function (nickname) {
-        this.nickname = nickname;
-    };
-    this.setTopicname = function (topicname) {
-        this.topicname = topicname;
-    };
-    this.setInput = function (input) {
-        this.input = input;
-    };
-    this.setDate = function (date) {
-        this.date = date;
-    };
-    
-    this.getIdquestion = function () {
-        return this.idquestion;
-    };
-    this.getNickname = function () {
-        return this.nickname;
-    };
-    this.getTopicname = function () {
-        return this.topicname;
-    };
-    this.getInput = function () {
-        return this.input;
-    };
-    this.getDate = function () {
-        return this.date;
-    };
+function Question ()
+{
+	//Attributes declaration
+	this.idQuestion;
+	this.nick;
+	this.topicName;
+	this.input;
+	this.dateIn;
 
 
-    /*this.validate = function ()    {
-        var errors = new Array();
+	//Methods declaration
+	this.construct = function (idQuestion,nick,topicName, input,dateIn)
+	{
+		this.setIdQuestion(idQuestion);
+		this.setNick(nick);
+		this.setTopicName(topicName);
+		this.setInput(input);
+		this.setDateIn(dateIn);
+	}
 
-        try{
-            if (this.getName().length == 0 || this.getName().match(/^[a-zA-Z]+$/) == null){
-                errors.push("Name must be informed and contain only letters");
-            }
-        } catch (e) {
-            errors.push("Name must be informed and contain only letters");
-        }
+	this.setIdQuestion = function (idQuestion){this.idQuestion=idQuestion;}
+	this.setInput = function (input){this.input=input;}
+	this.setDateIn = function (dateIn){this.dateIn=dateIn;}
+	this.setNick = function (nick){this.nick=nick;}
+	this.setTopicName = function (topicName){this.topicName=topicName;}
 
-        try{
-            if (this.getSurname().length == 0){
-                errors.push("Surname must be informed and contain only letters");
-            }
-        } catch (e){
-            errors.push("Surname must be informed and contain only letters");
-        }
-        return errors;
-    }
+	this.getIdQuestion = function () {return this.idQuestion;}
+	this.getInput = function () {return this.input;}
+	this.getDateIn = function () {return this.dateIn;}
+	this.getNick = function () {return this.nick;}
+	this.getTopicName = function () {return this.topicName;}
 
-    this.toString = function () {
-        var reservationString = "RESERVATION - ID=" + this.getId() + " FIRST NAME=" + this.getName() + " LAST NAME=" + this.getSurname();
-        reservationString += " FIRST ADDRESS=" + this.getFirstAddress() + " SECOND ADDRESS=" + this.getSecondAddress() + " CITY=" + this.getCity();
-        reservationString += " STATE=" + this.getState() + " POSTAL CODE=" + this.getPostalCode() + " ADULTS=" + this.getNumOfAdults();
-        reservationString += " CHILDREN=" + this.getNumOfChildren() + " PHONE=" + this.getPhone() + " EMAIL=" + this.getEmail();
-        reservationString += " ROOM PREF=" + this.getRoomPreference() + " CHECK IN DATE=" + this.getCheckInDate() + " CHECK OUT DATE=" + this.getCheckOutDate();
-        reservationString += " CHECK IN TIME=" + this.getCheckInTime() + " CHECK OUT TIME=" + this.getCheckOutTime() + " SPECIAL REQ=" + this.getSpecialRequests() + " SPECIAL INS=" + this.getSpecialInstructions();
-        return reservationString;
-    }*/
-} // END Question class
+
+	this.arrayToString = function (arrayReview)
+	{
+		var reviewString ="";
+		$.each(arrayReview, function (index, review){
+			reviewString+="reiew number "+(index+1)+":"+review.toString()+"\n";
+		});
+		return reviewString;
+	}
+
+	this.toString = function ()
+	{
+		var reviewString ="idQuestion="+this.getIdQuestion()+" input="+this.getInput()+" dateIn="+this.getDateIn()+" nick="+this.getNick();
+		reviewString +=" topicName="+this.getTopicName();
+
+		return reviewString;
+	}
+}

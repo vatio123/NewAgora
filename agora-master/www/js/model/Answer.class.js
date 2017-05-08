@@ -1,37 +1,37 @@
 function Answer ()
 {
 	//Attributes declaration
-	this.idAnswer;
-  this.idQuestion;
-	this.nick;
-	this.topicName;
+	this.idanswer;
+  this.idquestion;
+	this.nickname;
+	this.topicname;
 	this.input;
 	this.dateIn;
 
 
 	//Methods declaration
-	this.construct = function (idAnswer,idQuestion,nick,topicName, input,dateIn)
+	this.construct = function (idanswer,idquestion,nickname,topicname, input,dateIn)
 	{
-		this.setIdAnswer(idAnswer);
-		this.setNick(nick);
-		this.setTopicName(topicName);
+		this.setIdanswer(idanswer);
+		this.setNickname(nickname);
+		this.setTopicname(topicname);
 		this.setInput(input);
 		this.setDateIn(dateIn);
 	}
 
-	this.setIdAnswer = function (idAnswer){this.idAnswer=idAnswer;}
+	this.setIdanswer = function (idanswer){this.idanswer=idanswer;}
 	this.setInput = function (input){this.input=input;}
 	this.setDateIn = function (dateIn){this.dateIn=dateIn;}
-	this.setNick = function (nick){this.nick=nick;}
-	this.setTopicName = function (topicName){this.topicName=topicName;}
-  this.setIdQuestion = function (idQuestion){this.idQuestion = idQuestion;}
+	this.setNickname = function (nickname){this.nickname=nickname;}
+	this.setTopicname = function (topicname){this.topicname=topicname;}
+  this.setIdquestion = function (idquestion){this.idquestion = idquestion;}
 
-	this.getIdAnswer = function () {return this.idAnswer;}
+	this.getIdanswer = function () {return this.idanswer;}
 	this.getInput = function () {return this.input;}
 	this.getDateIn = function () {return this.dateIn;}
-	this.getNick = function () {return this.nick;}
-	this.getTopicName = function () {return this.topicName;}
-  this.getIdQuestion = function() {return this.idQuestion;}
+	this.getNickname = function () {return this.nickname;}
+	this.getTopicname = function () {return this.topicname;}
+  this.getIdquestion = function() {return this.idquestion;}
 
 
 	this.arrayToString = function (arrayReview)
@@ -45,8 +45,8 @@ function Answer ()
 
 	this.toString = function ()
 	{
-		var reviewString ="idAnswer="+this.getIdAnswer()+" input="+this.getInput()+" dateIn="+this.getDateIn()+" nick="+this.getNick();
-		reviewString +=" topicName="+this.getTopicName()+" idQuestion="+this.getIdQuestion();
+		var reviewString ="idanswer="+this.getIdanswer()+" input="+this.getInput()+" dateIn="+this.getDateIn()+" nickname="+this.getNickname();
+		reviewString +=" topicname="+this.getTopicname()+" idquestion="+this.getIdquestion();
 
 		return reviewString;
 	}

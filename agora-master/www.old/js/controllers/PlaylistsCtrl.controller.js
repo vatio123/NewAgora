@@ -7,17 +7,15 @@ starterApp.controller('PlaylistsCtrl', function($scope, accessService, $statePar
     true, "POST", {controllerType: 2, action: 10000, jsonData: ""});
 
     promise.then(function (outputData) {
-        console.log(outputData);
+      //alert("con done");
       if(outputData[0] === true) {
         console.log(outputData[1]);
         //console.log(outputData[1]);
         //id,idUser,dateReview, rate,description
-        
         for (var i = 0; i < outputData[1].length; i++) {
-            
           var question = new Question();
           question.setIdQuestion(outputData[1][i].idquestion);
-          question.setNickname(outputData[1][i].nickname);
+          question.setNick(outputData[1][i].nickname);
           question.setTopicName(outputData[1][i].topicname);
           question.setInput(outputData[1][i].input);
           question.setDateIn(outputData[1][i].date);
@@ -25,7 +23,7 @@ starterApp.controller('PlaylistsCtrl', function($scope, accessService, $statePar
         }
       }
       else {
-          console.log(outputData);
+        console.log(outputData);
         if(angular.isArray(outputData[1])) {
           alert(outputData[1]);
         }
@@ -34,6 +32,6 @@ starterApp.controller('PlaylistsCtrl', function($scope, accessService, $statePar
         }
       }
     });
-  };
+  }
     $scope.loadInitData();
 });

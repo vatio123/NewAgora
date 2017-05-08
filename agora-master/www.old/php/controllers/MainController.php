@@ -5,13 +5,9 @@
  * it controls all the server part of the application
  */
 require_once "UserControllerClass.php";
-require_once "AnswerControllerClass.php";
+//require_once "AnswerControllerClass.php";
 require_once "QuestionControllerClass.php";
-require_once "ReportaControllerClass.php";
-require_once "ReportqControllerClass.php";
-require_once "TopicControllerClass.php";
-require_once "ValorationaControllerClass.php";
-require_once "ValorationqControllerClass.php";
+//require_once "ApplyControllerClass.php";
 
 function is_session_started() {
     if (php_sapi_name() !== 'cli') {

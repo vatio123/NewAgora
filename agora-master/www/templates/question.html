@@ -1,0 +1,62 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">Make your question!</h1>
+<i class="icon ion-ios-close close-modal" ng-click="registered=0;closeModal(3)"></i>
+  </ion-header-bar>
+  <ion-content>
+    <form name="questionForm" ng-submit="doQuestion()" novalidate>
+      <!--label for="topic"> Select topic: </label><br>
+      <select name="multipleSelect" id="multipleSelect" ng-model="thequestion.topicName">
+        <option ng-repeat="topic in topics" value="{{topic.topicname}}">{{topic.topicname}}</option>
+      </select-->
+          <div class="list">
+          <label class="item item-input item-select">
+            <div class="input-label">
+              Select Topic:
+            </div>
+            <select ng-model="thequestion.topicname">
+              <option ng-repeat="topic in topics" value="{{topic.topicname}}">{{topic.topicname}}</option>
+            </select>
+          </label>
+          <label class="item item-input">
+            <span class="input-label">Your question</span>
+            <textarea ng-model="thequestion.input" placeholder="Ask your question here..." rows="8" cols="10" required>
+            </textarea>
+          </label>
+          <label class="item item-input">
+            <span class="input-label">Write the following characters <strong>{{pass}}</strong>:</span>
+            <input name="input" type="text" ng-model="confirm" placeholder="Are you a human?" required>
+            </textarea>
+          </label>
+          <h3 style="margin-left:15%;" class="title">Are you sure are you a human?</h3>
+          <ion-list>
+            <ion-radio ng-model="finaltest" ng-value="'maybe'">I'm not sure</ion-radio>
+            <ion-radio ng-model="finaltest" ng-value="'yes'">Of course</ion-radio>
+            <ion-radio ng-model="finaltest" ng-value="'no'">011110010110010101110011</ion-radio>
+            <ion-radio ng-model="finaltest" ng-value="'10001100'">Botnet wants to own you</ion-radio>
+          </ion-list>
+          <label class="item">
+            <button ng-disabled="questionForm.$invalid || pass!=confirm || finaltest!='yes'" class="button button-block button-balanced" type="submit">Make It!</button>
+          </label>
+        </div>
+      <!--div class="list">
+        <label class="item item-input">
+          <span class="input-label">Username</span>
+          <input type="text" ng-model="theusertologin.nickname">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Password</span>
+          <input type="password" ng-model="theusertologin.password">
+        </label>
+        <label class="item">
+          <button class="button button-block button-stable" ng-click="registered=0" type="submit">Log in</button>
+        </label>
+        <a href="#/app/signin" ng-click="state.go('app');location.reload();closeModal(3)" class="button button-block button-balanced">
+          Sign in
+        </a>
+      </div-->
+    </form>
+    <br/>
+
+  </ion-content>
+</ion-modal-view>

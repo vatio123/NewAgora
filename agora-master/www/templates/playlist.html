@@ -1,5 +1,13 @@
-<ion-view view-title="Playlist">
+<ion-view>
+  <ion-nav-title>
+    <h2>Question {{inQuestion.idquestion}}</h2>
+</ion-nav-title>
   <ion-content>
-    <h1>Playlist</h1>
+    <ion-list>
+      <br/>
+      <br/>
+        <h2 style="margin-left:15%;">{{inQuestion.input}}</h2>
+        <h4 style="float:right;margin-right:25%;">Author: <strong style="color:teal;">{{inQuestion.nickname}}</strong></h4>
+    </ion-list>
   </ion-content>
 </ion-view>

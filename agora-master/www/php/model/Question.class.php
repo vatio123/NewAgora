@@ -21,9 +21,9 @@ class Question implements EntityInterface {
     private static $colNameTopicname = "topicname";
     private static $colNameInput = "input";
     private static $colNameDate = "date";
-    
+
     public function __construct() {
-        
+
     }
 
     public function getIdquestion() {
@@ -78,7 +78,7 @@ class Question implements EntityInterface {
 
     public function setAll($idquestion, $nickname, $topicname, $input, $date) {
         $this->setIdquestion($idquestion);
-        $this->setInput($nickname);
+        $this->setNickname($nickname);
         $this->setTopicname($topicname);
         $this->setInput($input);
         $this->setDate($date);

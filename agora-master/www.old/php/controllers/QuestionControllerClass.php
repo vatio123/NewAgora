@@ -9,6 +9,7 @@ require_once "../model/Question.class.php";
 require_once "../model/persist/QuestionADO.php";
 
 class QuestionControllerClass implements ControllerInterface {
+
     private $action;
     private $jsonData;
 
@@ -38,18 +39,18 @@ class QuestionControllerClass implements ControllerInterface {
 
         switch ($this->getAction()) {
             case 10000:
-                $outPutData = $this->listAll();
+                $outPutData = $this->llistAll();
                 break;
-            case 10010:
+            case 10000:
                 $outPutData = $this->create();
                 break;
-            case 10020:
+            case 10000:
                 $outPutData = $this->delete();
                 break;
-            case 10030:
+            case 10000:
                 $outPutData = $this->update();
                 break;
-            case 10040:
+            case 10000:
                 $outPutData = $this->findByPK();
                 break;
             default:
@@ -57,13 +58,13 @@ class QuestionControllerClass implements ControllerInterface {
                 $outPutData[0] = false;
                 $errors[] = "Sorry, there has been an error. Try later";
                 $outPutData[] = $errors;
-                error_log("Action not correct in FilmControllerClass, value: " . $this->getAction());
+                error_log("Action not correct in QuestionControllerClass, value: " . $this->getAction());
                 break;
         }
         return $outPutData;
     }
-    
-    private function listAll() {
+
+    private function llistAll() {
         $outPutData = array();
         $outPutData[] = true;
         $errors = array();
@@ -85,7 +86,7 @@ class QuestionControllerClass implements ControllerInterface {
         }
         return $outPutData;
     }
-    
+
     private function create() {
         $questionObj = json_decode(stripslashes($this->getJsonData()));
         $question = new Question();
@@ -97,7 +98,9 @@ class QuestionControllerClass implements ControllerInterface {
         $outPutData[] = array($question->getAll());
         return $outPutData;
     }
-    
+
+
+
     private function update() {
         //Films modification
         $questionsArray = json_decode(stripslashes($this->getJsonData()));
@@ -105,12 +108,12 @@ class QuestionControllerClass implements ControllerInterface {
         $outPutData[] = true;
         foreach ($questionsArray as $questionObj) {
             $question = new Question();
-            $question->setAll($questionObj->nickname, $questionObj->topicname, $questionObj->input, $questionObj->date);
+            $question->setAll($questionObj->idquestion, $questionObj->nickname, $questionObj->topicname, $questionObj->input, $questionObj->date);
             QuestionADO::update($question);
         }
         return $outPutData;
     }
-    
+
     private function delete() {
         //Films modification
         $questionsArray = json_decode(stripslashes($this->getJsonData()));
@@ -118,12 +121,12 @@ class QuestionControllerClass implements ControllerInterface {
         $outPutData[] = true;
         foreach ($questionsArray as $questionObj) {
             $question = new Question();
-            $question->setAll($questionObj->nickname, $questionObj->topicname, $questionObj->input, $questionObj->date);
+            $question->setAll($questionObj->idquestion, $questionObj->nickname, $questionObj->topicname, $questionObj->input, $questionObj->date);
             QuestionADO::delete($question);
         }
         return $outPutData;
     }
-    
+
     private function findByPK() {
         //Films modification
         $questionsArray = json_decode(stripslashes($this->getJsonData()));
@@ -131,13 +134,13 @@ class QuestionControllerClass implements ControllerInterface {
         $outPutData[] = true;
         foreach ($questionsArray as $questionObj) {
             $question = new Question();
-            $question->setAll($questionObj->nickname, $questionObj->topicname, $questionObj->input, $questionObj->date);
+            $question->setAll($questionObj->idquestion, $questionObj->nickname, $questionObj->topicname, $questionObj->input, $questionObj->date);
             QuestionADO::findByPK($question);
         }
         return $outPutData;
     }
 
-    
+
 }
 
 ?>

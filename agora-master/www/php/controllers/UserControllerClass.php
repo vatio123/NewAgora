@@ -76,7 +76,7 @@ class UserControllerClass implements ControllerInterface {
         }
         return $outPutData;
     }
-    
+
     private function findByPK() {
         //Films modification
         $usersArray = json_decode(stripslashes($this->getJsonData()));
@@ -89,7 +89,7 @@ class UserControllerClass implements ControllerInterface {
         }
         return $outPutData;
     }
-    
+
     private function findByEmail() {
         //Films modification
         $usersArray = json_decode(stripslashes($this->getJsonData()));
@@ -102,7 +102,7 @@ class UserControllerClass implements ControllerInterface {
         }
         return $outPutData;
     }
-    
+
 
     private function create() {
         $userObj = json_decode(stripslashes($this->getJsonData()));
@@ -152,7 +152,7 @@ class UserControllerClass implements ControllerInterface {
         $user = new User();
         $user->setNickname($userObj->nickname);
         $user->setPassword($userObj->password);
-        $userList = UserADO::findByNicknameAndPass($user);
+        $userList = UserADO::findByNickAndPass($user);
         if (count($userList) == 0) {
             $outPutData[0] = false;
             $errors[] = "No user has found with these data";

@@ -9,14 +9,18 @@
         </button>
       </ion-nav-buttons>
       <ion-nav-buttons side="right">
-        <button class="button button-icon ion-person">
+        <button ng-if="theuser.getNickname()=='anonymous'" class="button button-icon ion-person">
+          {{theuser.nickname}}
+        </button>
+        <button ng-if="theuser.getNickname()!='anonymous'" class="button button-icon ion-happy-outline">
+        {{theuser.nickname}} <strong>{{theuser.userscore}}</strong>
         </button>
       </ion-nav-buttons>
     </ion-nav-bar>
     <div class="bar bar-subheader margin">
       <div class="button-bar">
         <a class="button button-positive" ng-click="openModal(2);" >What's AGORA?</a>
-        <a class="button button-calm">Add a question</a>
+        <a class="button button-calm" ng-click="openModal(3);">Add a question</a>
       </div>
     </div>
     <ion-nav-view name="menuContent"></ion-nav-view>
@@ -32,13 +36,16 @@
         <ion-item menu-close href="#/app/playlists">
           MAIN PAGE
         </ion-item>
-        <ion-item menu-close ng-click="openModal(1)">
+        <ion-item ng-show="theuser.getNickname()=='anonymous'" menu-close ng-click="openModal(1)">
           LOGIN
         </ion-item>
-        <ion-item ng-show="theuser.getNickname()!='john doe'" menu-close href="#/app/search">
+        <ion-item ng-show="theuser.getNickname()!='anonymous'" menu-close ng-click="logout()">
+          LOGOUT
+        </ion-item>
+        <ion-item ng-show="theuser.getNickname()!='anonymous'" menu-close href="#/app/search">
           MY ACCOUNT
         </ion-item>
-        <ion-item ng-show="theuser.getNickname()=='john doe'" menu-close href="#/app/signin">
+        <ion-item ng-show="theuser.getNickname()=='anonymous'" menu-close href="#/app/signin">
           SIGN UP
         </ion-item>
         <ion-item menu-close href="#/app/browse">

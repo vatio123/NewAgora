@@ -7,6 +7,7 @@
 require_once "UserControllerClass.php";
 //require_once "AnswerControllerClass.php";
 require_once "QuestionControllerClass.php";
+require_once "TopicControllerClass.php";
 //require_once "ApplyControllerClass.php";
 
 function is_session_started() {

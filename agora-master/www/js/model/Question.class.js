@@ -1,34 +1,34 @@
 function Question ()
 {
 	//Attributes declaration
-	this.idQuestion;
-	this.nick;
-	this.topicName;
+	this.idquestion;
+	this.nickname;
+	this.topicname;
 	this.input;
 	this.dateIn;
 
 
 	//Methods declaration
-	this.construct = function (idQuestion,nick,topicName, input,dateIn)
+	this.construct = function (idquestion,nickname,topicname, input,dateIn)
 	{
-		this.setIdQuestion(idQuestion);
-		this.setNick(nick);
-		this.setTopicName(topicName);
+		this.setIdquestion(idquestion);
+		this.setNickname(nickname);
+		this.setTopicname(topicname);
 		this.setInput(input);
 		this.setDateIn(dateIn);
 	}
 
-	this.setIdQuestion = function (idQuestion){this.idQuestion=idQuestion;}
+	this.setIdquestion = function (idquestion){this.idquestion=idquestion;}
 	this.setInput = function (input){this.input=input;}
 	this.setDateIn = function (dateIn){this.dateIn=dateIn;}
-	this.setNick = function (nick){this.nick=nick;}
-	this.setTopicName = function (topicName){this.topicName=topicName;}
+	this.setNickname = function (nickname){this.nickname=nickname;}
+	this.setTopicname = function (topicname){this.topicname=topicname;}
 
-	this.getIdQuestion = function () {return this.idQuestion;}
+	this.getIdquestion = function () {return this.idquestion;}
 	this.getInput = function () {return this.input;}
 	this.getDateIn = function () {return this.dateIn;}
-	this.getNick = function () {return this.nick;}
-	this.getTopicName = function () {return this.topicName;}
+	this.getNickname = function () {return this.nickname;}
+	this.getTopicname = function () {return this.topicname;}
 
 
 	this.arrayToString = function (arrayReview)
@@ -42,8 +42,8 @@ function Question ()
 
 	this.toString = function ()
 	{
-		var reviewString ="idQuestion="+this.getIdQuestion()+" input="+this.getInput()+" dateIn="+this.getDateIn()+" nick="+this.getNick();
-		reviewString +=" topicName="+this.getTopicName();
+		var reviewString ="idquestion="+this.getIdquestion()+" input="+this.getInput()+" dateIn="+this.getDateIn()+" nickname="+this.getNickname();
+		reviewString +=" topicName="+this.getTopicname();
 
 		return reviewString;
 	}

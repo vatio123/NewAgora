@@ -6,6 +6,7 @@
  */
 require_once "ControllerInterface.php";
 require_once "../model/Answer.class.php";
+require_once "../model/Question.class.php";
 require_once "../model/persist/AnswerADO.php";
 
 class AnswerControllerClass implements ControllerInterface {
@@ -41,17 +42,20 @@ class AnswerControllerClass implements ControllerInterface {
             case 10000:
                 $outPutData = $this->llistAll();
                 break;
-            case 10000:
+            case 10010:
                 $outPutData = $this->create();
                 break;
-            case 10000:
+            case 10020:
                 $outPutData = $this->delete();
                 break;
-            case 10000:
+            case 10030:
                 $outPutData = $this->update();
                 break;
-            case 10000:
+            case 10040:
                 $outPutData = $this->findByPK();
+                break;
+            case 10050:
+                $outPutData = $this->findByQuestionId();
                 break;
             default:
                 $errors = array();
@@ -134,6 +138,19 @@ class AnswerControllerClass implements ControllerInterface {
             $answer = new Answer();
             $answer->setAll($answerObj->nickname, $answerObj->idquestion, $answerObj->input, $answerObj->date);
             AnswerADO::findByPK($answer);
+        }
+        return $outPutData;
+    }
+
+    private function findByQuestionId() {
+        //Films modification
+        $questionsArray = json_decode(stripslashes($this->getJsonData()));
+        $outPutData = array();
+        $outPutData[] = true;
+        foreach ($questionsArray as $questionObj) {
+            $answer = new Answer();
+            $answer->setAll("nickname", $questionObj->idquestion, "input", "date");
+            AnswerADO::findByQuestionId($answer);
         }
         return $outPutData;
     }

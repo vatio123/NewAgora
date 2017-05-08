@@ -41,16 +41,16 @@ class QuestionControllerClass implements ControllerInterface {
             case 10000:
                 $outPutData = $this->llistAll();
                 break;
-            case 10000:
+            case 10010:
                 $outPutData = $this->create();
                 break;
-            case 10000:
+            case 10020:
                 $outPutData = $this->delete();
                 break;
-            case 10000:
+            case 10030:
                 $outPutData = $this->update();
                 break;
-            case 10000:
+            case 10040:
                 $outPutData = $this->findByPK();
                 break;
             default:
@@ -90,10 +90,11 @@ class QuestionControllerClass implements ControllerInterface {
     private function create() {
         $questionObj = json_decode(stripslashes($this->getJsonData()));
         $question = new Question();
-        $question->setAll(0, $questionObj->nickname, $questionObj->topicname, $questionObj->input, $questionObj->date);
+        $question->setAll(0, $questionObj->nickname, $questionObj->topicname, $questionObj->input, date("Y-m-d"));
         $outPutData = array();
         $outPutData[] = true;
-        $question->setQuestionId(QuestionADO::create($question));
+        $question->setIdquestion(QuestionADO::create($question));
+        //error_log(var_dump($question, true));
         //the senetnce returns de nickname of the question inserted
         $outPutData[] = array($question->getAll());
         return $outPutData;
