@@ -1,0 +1,21 @@
+<ion-view ng-init="loadReports();" >
+  <ion-nav-title>
+    <h2>Reports from a question</h2>
+</ion-nav-title>
+  <ion-content>
+      <br/>
+      <br/>
+
+
+    <div class="card" ng-repeat="reportq in reportqs">
+      <div class="item item-text-wrap">
+        <h2>{{reportq.reporttext}}</h2>
+        <br/>
+      <strong>Author: {{reportq.nickname}}</strong>
+      <small style="float:right;">{{reportq.date}}</small>
+    <button class="button button-assertive" ng-click="removeReport(reportq);">Delete report</button>
+
+    </div>
+    </div>
+  </ion-content>
+</ion-view>

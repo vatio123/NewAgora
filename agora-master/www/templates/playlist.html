@@ -3,11 +3,60 @@
     <h2>Question {{inQuestion.idquestion}}</h2>
 </ion-nav-title>
   <ion-content>
-    <ion-list>
       <br/>
       <br/>
-        <h2 style="margin-left:15%;">{{inQuestion.input}}</h2>
-        <h4 style="float:right;margin-right:25%;">Author: <strong style="color:teal;">{{inQuestion.nickname}}</strong></h4>
-    </ion-list>
+        <h2 style="margin-left:15%;margin-right=15%;">{{inQuestion.input}}</h2>
+        <div style="margin-left:15%;margin-right=15%;">
+        <h2>{{inQuestion.totalvaloration}} <i style="font-size:35px;" class="icon ion-star"></i></h2>
+        {{inQuestion.rated}}
+      </div>
+      </div>
+        <h4 style="float:right;margin-right:20%;margin-left:20%;">Author: <strong style="color:teal;">{{inQuestion.nickname}}</strong></h4>
+        <br/>
+              <a class="button button-block button-dark" ng-show="(theuser.nickname=='anonymous' && inQuestion.topicname=='untopic') || (theuser.nickname!='anonymous')" ng-click="newAnswer();answer?answer=false:answer=true;"><span ng-show="!answer">Click me to make your answer!</span>
+              <span ng-show="answer">Click me to cancel your answer!</span></a>
+        <br/>
+        <div ng-show="answer" class="card">
+          <form name="answerForm" ng-submit="doAnswer()" novalidate>
+          <div class="list">
+          <label class="item item-input">
+            <span class="input-label">Your answer:</span>
+            <textarea ng-model="theanswer.input" placeholder="Make your answer here..." rows="8" cols="10" required>
+            </textarea>
+          </label>
+          <label class="item item-input">
+            <span class="input-label">Write the following characters <strong>{{passa}}</strong>:</span>
+            <input name="input" type="text" ng-model="confirma" placeholder="Are you a human?" required>
+          </textarea>
+          </label>
+          <h3 style="margin-left:15%;" class="title">Are you sure are you a human?</h3>
+          <ion-list>
+            <ion-radio ng-model="finaltesta" ng-value="'maybe'">I'm not sure</ion-radio>
+            <ion-radio ng-model="finaltesta" ng-value="'yes'">Of course</ion-radio>
+            <ion-radio ng-model="finaltesta" ng-value="'no'">011110010110010101110011</ion-radio>
+            <ion-radio ng-model="finaltesta" ng-value="'10001100'">Botnet wants to own you</ion-radio>
+          </ion-list>
+          <label class="item">
+            <button ng-disabled="answerForm.$invalid || passa!=confirma || finaltesta!='yes'" class="button button-block button-balanced" type="submit">Make It!</button>
+          </label>
+        </div>
+        </div>
+        <label class = "item item-input">
+        <strong>Order by...</strong>
+        <select class="" name="filtera" ng-model="theFilterA">
+          <option value="nickname">Nickname</option>
+          <option value="dateIn">Date</option>
+          <option value="valoration">Score</option>
+        </select>
+      </label>
+    <div class="card" ng-repeat="answer in answers | orderBy: theFilterA:false">
+      <div class="item item-text-wrap">
+        <h2>{{answer.input}}</h2>
+        <br/>
+      <strong>Author: {{answer.nickname}}</strong>
+      <strong style="color:teal;">Total Score: {{answer.totalvaloration}}</strong><i class="icon ion-star"></i>
+      <small style="float:right;">{{answer.dateIn}}</small>
+    </div>
+    </div>
   </ion-content>
 </ion-view>

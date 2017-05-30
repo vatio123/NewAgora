@@ -38,20 +38,23 @@ class ReportaControllerClass implements ControllerInterface {
         $outPutData = array();
 
         switch ($this->getAction()) {
-            case 10000:
+            case 10010:
                 $outPutData = $this->llistAll();
                 break;
-            case 10000:
+            case 10020:
                 $outPutData = $this->create();
                 break;
-            case 10000:
+            case 10030:
                 $outPutData = $this->delete();
                 break;
-            case 10000:
+            case 10040:
                 $outPutData = $this->update();
                 break;
-            case 10000:
+            case 10050:
                 $outPutData = $this->findByPK();
+                break;
+            case 10060:
+                $outPutData = $this->findByAnswerId();
                 break;
             default:
                 $errors = array();
@@ -86,7 +89,7 @@ class ReportaControllerClass implements ControllerInterface {
         }
         return $outPutData;
     }
-/*private $idreport;
+/*private $idreporta;
     private $nickname;
     private $idanswer;
     private $reporttext;
@@ -112,7 +115,7 @@ class ReportaControllerClass implements ControllerInterface {
         $outPutData[] = true;
         foreach ($reportasArray as $reportaObj) {
             $reporta = new Reporta();
-            $reporta->setAll($reportaObj->idreport, $reportaObj->nickname, $reportaObj->idanswer, $reportaObj->reporttext, $reportaObj->date);
+            $reporta->setAll($reportaObj->idreporta, $reportaObj->nickname, $reportaObj->idanswer, $reportaObj->reporttext, $reportaObj->date);
             ReportaADO::update($reporta);
         }
         return $outPutData;
@@ -125,7 +128,7 @@ class ReportaControllerClass implements ControllerInterface {
         $outPutData[] = true;
         foreach ($reportasArray as $reportaObj) {
             $reporta = new Reporta();
-            $reporta->setAll($reportaObj->idreport, $reportaObj->nickname, $reportaObj->idanswer, $reportaObj->reporttext, $reportaObj->date);
+            $reporta->setAll($reportaObj->idreporta, $reportaObj->nickname, $reportaObj->idanswer, $reportaObj->reporttext, $reportaObj->date);
             ReportaADO::delete($reporta);
         }
         return $outPutData;
@@ -138,12 +141,37 @@ class ReportaControllerClass implements ControllerInterface {
         $outPutData[] = true;
         foreach ($reportasArray as $reportaObj) {
             $reporta = new Reporta();
-            $reporta->setAll($reportaObj->idreport, $reportaObj->nickname, $reportaObj->idanswer, $reportaObj->reporttext, $reportaObj->date);
+            $reporta->setAll($reportaObj->idreporta, $reportaObj->nickname, $reportaObj->idanswer, $reportaObj->reporttext, $reportaObj->date);
             ReportaADO::findByPK($reporta);
         }
         return $outPutData;
     }
 
+    private function findByAnswerId() {
+        $reportaObj = json_decode(stripslashes($this->getJsonData()));
+        $outPutData = array();
+        $outPutData[] = true;
+        $errors = array();
+        $reporta = new Reporta();
+        $reporta->setAll(0, null, $reportaObj->idanswer, null, date("Y-m-d"));
+        $listReportas = ReportaADO::findByAnswerId($reporta);
+        if (count($listReportas) == 0) {
+            $outPutData[0] = false;
+            $errors[] = "No reportas found in database";
+        } else {
+            $reportasArray = array();
+
+            foreach ($listReportas as $reporta) {
+                $reportasArray[] = $reporta->getAll();
+            }
+        }
+        if ($outPutData[0]) {
+            $outPutData[] = $reportasArray;
+        } else {
+            $outPutData[] = $errors;
+        }
+        return $outPutData;
+    }
 
 }
 

@@ -41,16 +41,16 @@ class TopicControllerClass implements ControllerInterface {
             case 10000:
                 $outPutData = $this->llistAll();
                 break;
-            case 10000:
+            case 10100:
                 $outPutData = $this->create();
                 break;
-            case 10000:
+            case 10200:
                 $outPutData = $this->delete();
                 break;
-            case 10000:
+            case 10300:
                 $outPutData = $this->update();
                 break;
-            case 10000:
+            case 10400:
                 $outPutData = $this->findByPK();
                 break;
             default:

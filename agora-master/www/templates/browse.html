@@ -1,9 +1,10 @@
 <ion-view view-title="TOPICS">
   <ion-content>
     <ion-list>
-      <ion-item ng-repeat="topic in topics"> <!-- href="#/app/playlists/{{playlist.id}}"-->
-        <h2>{{topic.title}}</h2>
-        <strong>{{topic.id}} questions</strong>
+      <ion-item ng-repeat="topic in topics" href="#/app/filteredtopic"> <!-- href="#/app/playlists/{{playlist.id}}"-->
+        <a ng-click="filterTopic(topic)">
+        <h2>{{topic.topicname}}</h2>
+        </a>
       </ion-item>
     </ion-list>
   </ion-content>

@@ -1,0 +1,33 @@
+<ion-view>
+  <ion-nav-title>
+    <h2>Reported Answers</h2>
+</ion-nav-title>
+  <ion-content>
+      <br/>
+      <br/>
+    
+
+    <label class = "item item-input">
+    <strong>Order by ...</strong>
+    <select class="item select" name="filterq" ng-model="theFilter">
+      <option value="nickname">Nickname</option>
+      <option value="date">Date</option>
+      <option value="topicname">Topic</option>
+      <option value="totalvaloration">Score</option>
+    </select>
+  </label>
+  <br/>
+  <ion-list>
+      <ion-item ng-repeat="answer in answers | orderBy: theFilter:true" href="#/app/playlists/{{answer.idanswer}}">
+        <a ng-click="insideAnswer(answer);">
+          <h2>{{answer.input}}</h2>
+        <strong>Author: {{answer.nickname}}</strong><br/>
+        <strong style="color:teal;">Total Score: {{answer.totalvaloration}}</strong><i class="icon ion-star"></i>
+        <small style="float:right;">{{answer.topicname}}</small>
+        <br><button class="button button-assertive" ng-click="showReports(answer);">Show reports</button>
+        <br><button class="button button-assertive" ng-click="remove(answer);">Delete answer</button>
+      </a>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

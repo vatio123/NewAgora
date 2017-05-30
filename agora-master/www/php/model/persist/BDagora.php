@@ -24,7 +24,7 @@ class DBConnect {
 
     private function setConnection() {
 
-        $this->server = 'localhost';
+        $this->server = '127.0.0.1';
         $this->dataBase = 'daw1704';
         $this->user = 'root';
         $this->password = 'alumne';

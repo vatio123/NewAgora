@@ -38,20 +38,23 @@ class ReportqControllerClass implements ControllerInterface {
         $outPutData = array();
 
         switch ($this->getAction()) {
-            case 10000:
+            case 10010:
                 $outPutData = $this->llistAll();
                 break;
-            case 10000:
+            case 10020:
                 $outPutData = $this->create();
                 break;
-            case 10000:
+            case 10030:
                 $outPutData = $this->delete();
                 break;
-            case 10000:
+            case 10040:
                 $outPutData = $this->update();
                 break;
-            case 10000:
+            case 10050:
                 $outPutData = $this->findByPK();
+                break;
+            case 10060:
+                $outPutData = $this->findByQuestionId();
                 break;
             default:
                 $errors = array();
@@ -144,7 +147,34 @@ class ReportqControllerClass implements ControllerInterface {
         return $outPutData;
     }
 
+        private function findByQuestionId() {
+        $reportqObj = json_decode(stripslashes($this->getJsonData()));
+        $outPutData = array();
+        $outPutData[] = true;
+        $errors = array();
+        $reportq = new Reportq();
+        $reportq->setAll(0, null, $reportqObj->idquestion, null, date("Y-m-d"));
+        $listReportqs = ReportqADO::findByQuestionId($reportq);
+        if (count($listReportqs) == 0) {
+            $outPutData[0] = false;
+            $errors[] = "No reportqs found in database";
+        } else {
+            $reportqsArray = array();
 
+            foreach ($listReportqs as $reportq) {
+                $reportqsArray[] = $reportq->getAll();
+            }
+        }
+        if ($outPutData[0]) {
+            $outPutData[] = $reportqsArray;
+        } else {
+            $outPutData[] = $errors;
+        }
+        return $outPutData;
+    }
+    
+
+    
 }
 
 ?>

@@ -2,7 +2,7 @@
 
 /** AnswerADOClass.php
  * Entity AnswerADOClass
- * author  norosa@programmer.net
+ * author  Vath
  * version 2017/04
  */
 require_once "EntityInterfaceADO.php";
@@ -92,9 +92,9 @@ class AnswerADO implements EntityInterface {
      * @param id
      * @return object with the query results
      */
-    public static function findByPK($answer) {
+    public static function findByPK($review) {
         $cons = "select * from `" . AnswerADO::$tableAnswers . "` where " . AnswerADO::$colAnswersIdanswer . " = ?";
-        $arrayValues = [$answer->getIdanswer()];
+        $arrayValues = [$review->getIdanswer()];
         return AnswerADO::findByQuery($cons, $arrayValues);
     }
 
@@ -104,21 +104,9 @@ class AnswerADO implements EntityInterface {
      * @param name
      * @return object with the query results
      */
-    public static function findByIdanswer($answer) {
+    public static function findByIdanswer($review) {
         $cons = "select * from `" . AnswerADO::$tableAnswers . "` where " . AnswerADO::$colAnswersIdanswer . " = ?";
-        $arrayValues = [$answer->getIdanswer()];
-        return AnswerADO::findByQuery($cons, $arrayValues);
-    }
-
-    /**
-     * findByIdanswer()
-     * It runs a query and returns an object array
-     * @param name
-     * @return object with the query results
-     */
-    public static function findByQuestionId($answer) {
-        $cons = "select * from `" . AnswerADO::$tableAnswers . "` where " . AnswerADO::$colAnswersIdquestion . " = ?";
-        $arrayValues = [$answer->getIdquestion()];
+        $arrayValues = [$review->getIdanswer()];
         return AnswerADO::findByQuery($cons, $arrayValues);
     }
 
@@ -128,9 +116,9 @@ class AnswerADO implements EntityInterface {
      * @param name
      * @return object with the query results
      */
-    public static function findByNickname($answer) {
+    public static function findByNickname($review) {
         $cons = "select * from `" . AnswerADO::$tableAnswers . "` where " . AnswerADO::$colAnswersNickname . " = ?";
-        $arrayValues = [$answer->getNickname()];
+        $arrayValues = [$review->getNickname()];
         return AnswerADO::findByQuery($cons, $arrayValues);
     }
 
@@ -146,11 +134,26 @@ class AnswerADO implements EntityInterface {
         return AnswerADO::findByQuery($cons, $arrayValues);
     }
 
+
+
+     /**
+     * findAll()
+     * It runs a query and returns an object array
+     * @param none
+     * @return object with the query results
+     */
+       public static function llistAllReportedAnswers() {
+           //INSERT INTO `answers`(`idanswer`, `nickname`, `idquestion`, `input`, `date`
+        $cons = "select DISTINCT answers.idanswer, answers.nickname, answers.idquestion, answers.input, answers.date from answers INNER JOIN reporta ON answers.idanswer = reporta.idanswer;";
+        $arrayValues = [];
+        return AnswerADO::findByQuery($cons, $arrayValues);
+    }
+    
     /**
      * create()
      * insert a new row into the database
      */
-    public function create($answer) {
+    public function create($review) {
         //Connection with the database
         try {
             $conn = DBConnect::getInstance();
@@ -160,17 +163,17 @@ class AnswerADO implements EntityInterface {
         }
 
         $cons = "insert into " . AnswerADO::$tableAnswers . " (`nickname`,`idquestion`,`input`,`date`) values (?, ?, ?, ?)";
-        $arrayValues = [ $answer->getNickname(), $answer->getIdquestion(), $answer->getInput(), new Date()];
+        $arrayValues = [ $review->getNickname(), $review->getIdquestion(), $review->getInput(), date("Y-m-d")];
         $id = $conn->executionInsert($cons, $arrayValues);
-        $answer->setIdanswer($id);
-        return $answer->getIdanswer();
+        $review->setIdanswer($id);
+        return $review->getIdanswer();
     }
 
     /**
      * delete()
      * it deletes a row from the database
      */
-    public function delete($answer) {
+    public function delete($object) {
         //Connection with the database
         try {
             $conn = DBConnect::getInstance();
@@ -179,15 +182,20 @@ class AnswerADO implements EntityInterface {
             die();
         }
         $cons = "delete from `" . AnswerADO::$tableAnswers . "` where " . AnswerADO::$colAnswersIdanswer . " = ?";
-        $arrayValues = [$answer->getIdanswer()];
+        $arrayValues = [$object->getIdanswer()];
         $conn->execution($cons, $arrayValues);
     }
 
+    public static function findByQuestionId($answer) {
+    $cons = "select * from `" . AnswerADO::$tableAnswers . "` where " . AnswerADO::$colAnswersIdquestion . " = ?";
+    $arrayValues = [$answer->getIdquestion()];
+    return AnswerADO::findByQuery($cons, $arrayValues);
+    }
     /**
      * update()
      * it updates a row of the database
      */
-    public function update($answer) {
+    public function update($review) {
         //Connection with the database
         try {
             $conn = DBConnect::getInstance();
@@ -197,7 +205,7 @@ class AnswerADO implements EntityInterface {
         }
         $cons = "update `" . AnswerADO::$tableAnswers . "` set " . AnswerADO::$colAnswersNickname . " = ?," .
                 AnswerADO::$colAnswersIdquestion . " = ?, " . AnswerADO::$colAnswersInput . " =? where " . AnswerADO::$colAnswersDate . " = ?";
-        $arrayValues = [ $answer->getNickname(), $answer->getIdquestion(), $answer->getInput(), $answer->getDate()];
+        $arrayValues = [ $review->getNickname(), $review->getIdquestion(), $review->getInput(), $review->getDate()];
         $conn->execution($cons, $arrayValues);
     }
 

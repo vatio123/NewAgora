@@ -2,12 +2,13 @@
 
 /** ReportaADOClass.php
  * Entity ReportaADOClass
- * author  norosa@programmer.net
+ * author  Vath
  * version 2017/04
  */
 require_once "EntityInterfaceADO.php";
 require_once "BDagora.php";
 require_once "../model/Reporta.class.php";
+require_once "../model/Answer.class.php";
 
 class ReportaADO implements EntityInterface {
 /*private $idreport;
@@ -17,7 +18,7 @@ class ReportaADO implements EntityInterface {
     private $date;*/
     //----------Data base Values---------------------------------------
     private static $tableReportas = "reporta";
-    private static $colReportasIdreport = "idreport";
+    private static $colReportasIdreporta = "idreporta";
     private static $colReportasNickname = "nickname";
     private static $colReportasIdanswer = "idanswer";
     private static $reporttextcolReportasReporttext = "reporttext";
@@ -51,7 +52,7 @@ class ReportaADO implements EntityInterface {
      */
     private static function fromResultSet($res) {
         //We get all the values form the query
-        $id = $res[ReportaADO::$colReportasIdreport];
+        $id = $res[ReportaADO::$colReportasIdreporta];
         $nickname = $res[ReportaADO::$colReportasNickname];
         $idanswer = $res[ReportaADO::$colReportasIdanswer];
         $reporttext = $res[ReportaADO::$reporttextcolReportasReporttext];
@@ -59,7 +60,7 @@ class ReportaADO implements EntityInterface {
 
         //Object construction
         $entity = new Reporta();
-        $entity->setIdreport($id);
+        $entity->setIdreporta($id);
         $entity->setNickname($nickname);
         $entity->setIdanswer($idanswer);
         $entity->setReporttext($reporttext);
@@ -87,26 +88,26 @@ class ReportaADO implements EntityInterface {
     }
 
     /**
-     * findByIdreport()
+     * findByIdreporta()
      * It runs a query and returns an object array
      * @param id
      * @return object with the query results
      */
     public static function findByPK($object) {
-        $cons = "select * from `" . ReportaADO::$tableReportas . "` where " . ReportaADO::$colReportasIdreport . " = ?";
-        $arrayValues = [$object->getIdreport()];
+        $cons = "select * from `" . ReportaADO::$tableReportas . "` where " . ReportaADO::$colReportasIdreporta . " = ?";
+        $arrayValues = [$object->getIdreporta()];
         return ReportaADO::findByQuery($cons, $arrayValues);
     }
 
     /**
-     * findByIdreport()
+     * findByIdreporta()
      * It runs a query and returns an object array
      * @param name
      * @return object with the query results
      */
-    public static function findByIdreport($object) {
-        $cons = "select * from `" . ReportaADO::$tableReportas . "` where " . ReportaADO::$colReportasIdreport . " = ?";
-        $arrayValues = [$object->getIdreport()];
+    public static function findByIdreporta($object) {
+        $cons = "select * from `" . ReportaADO::$tableReportas . "` where " . ReportaADO::$colReportasIdreporta . " = ?";
+        $arrayValues = [$object->getIdreporta()];
         return ReportaADO::findByQuery($cons, $arrayValues);
     }
     
@@ -133,7 +134,19 @@ class ReportaADO implements EntityInterface {
         $arrayValues = [];
         return ReportaADO::findByQuery($cons, $arrayValues);
     }
-
+    
+    /**
+     * findByIdreporta()
+     * It runs a query and returns an object array
+     * @param name
+     * @return object with the query results
+     */
+    public static function findByAnswerId($object) {
+        $cons = "select * from `" . ReportaADO::$tableReportas . "` where " . ReportaADO::$colReportasIdanswer . " = ?";
+        $arrayValues = [$object->getIdanswer()];
+        return ReportaADO::findByQuery($cons, $arrayValues);
+    }
+ 
     /**
      * create()
      * insert a new row into the database
@@ -149,8 +162,8 @@ class ReportaADO implements EntityInterface {
         $cons = "insert into " . ReportaADO::$tableReportas . " (`nickname`,`idanswer`,`reporttext`,`date`) values (?, ?, ?, ?)";
         $arrayValues = [ $object->getNickname(), $object->getIdanswer(), $object->getReporttext(), new Date()];
         $id = $conn->executionInsert($cons, $arrayValues);
-        $object->setIdreport($id);
-        return $object->getIdreport();
+        $object->setIdreporta($id);
+        return $object->getIdreporta();
     }
 
     /**
@@ -165,8 +178,8 @@ class ReportaADO implements EntityInterface {
             print "Error connecting database: " . $e->getMessage() . " ";
             die();
         }
-        $cons = "delete from `" . ReportaADO::$tableReportas . "` where " . ReportaADO::$colReportasIdreport . " = ?";
-        $arrayValues = [$object->getIdreport()];
+        $cons = "delete from `" . ReportaADO::$tableReportas . "` where " . ReportaADO::$colReportasIdreporta . " = ?";
+        $arrayValues = [$object->getIdreporta()];
         $conn->execution($cons, $arrayValues);
     }
 
@@ -183,8 +196,8 @@ class ReportaADO implements EntityInterface {
             die();
         }
         $cons = "update `" . ReportaADO::$tableReportas . "` set " . ReportaADO::$colReportasNickname . " = ?," .
-                ReportaADO::$colReportasIdanswer . " = ?, " . ReportaADO::$reporttextcolReportasReporttext . " = ?". ReportaADO::$colReportasDate . " =? where " . ReportaADO::$colReportasIdreport . " = ?";
-        $arrayValues = [$object->getIdreport(), $object->getNickname(), $object->getIdanswer(), $object->getReporttext(), $object->getDate(), $object->getIdreport()];
+                ReportaADO::$colReportasIdanswer . " = ?, " . ReportaADO::$reporttextcolReportasReporttext . " = ?". ReportaADO::$colReportasDate . " =? where " . ReportaADO::$colReportasIdreporta . " = ?";
+        $arrayValues = [$object->getIdreporta(), $object->getNickname(), $object->getIdanswer(), $object->getReporttext(), $object->getDate(), $object->getIdreporta()];
         $conn->execution($cons, $arrayValues);
     }
 

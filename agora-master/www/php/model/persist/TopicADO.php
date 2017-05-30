@@ -2,7 +2,7 @@
 
 /** TopicADOClass.php
  * Entity TopicADOClass
- * author  norosa@programmer.net
+ * author  Vath
  * version 2017/04
  */
 require_once "EntityInterfaceADO.php";

@@ -79,14 +79,12 @@ class UserControllerClass implements ControllerInterface {
 
     private function findByPK() {
         //Films modification
-        $usersArray = json_decode(stripslashes($this->getJsonData()));
+        $userObj = json_decode(stripslashes($this->getJsonData()));
         $outPutData = array();
         $outPutData[] = true;
-        foreach ($usersArray as $userObj) {
-            $user = new User();
-            $user->setAll($userObj->nickname, $userObj->userscore, $userObj->firstname, $userObj->lastname, $userObj->email, $userObj->password, $userObj->postalcode);
-            UserADO::findByNickname($user);
-        }
+        $user = new User();
+        $user->setAll($userObj->nickname, 0, null, null, null, null, null);
+        $outPutData[1]=UserADO::findByNickname($user);
         return $outPutData;
     }
 

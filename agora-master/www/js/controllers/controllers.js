@@ -18,6 +18,8 @@ starterApp.controller('AppCtrl', function($scope, $ionicModal, $timeout, $state,
   // Form data for the login modal
   //$scope.topics=[];
   $scope.insiderDaddy;
+  $scope.insiderMommy;
+  $scope.insiderMommyAnwsers;
   $scope.loginData = {};
   $scope.newUser = function(){
     $scope.theuser=new User();
@@ -30,6 +32,7 @@ starterApp.controller('AppCtrl', function($scope, $ionicModal, $timeout, $state,
     $scope.confirm="";
     $scope.finaltest="";
   }
+
   $scope.registered=0;
   // Create the login modal that we will use later
   $ionicModal.fromTemplateUrl('templates/login.html', {
@@ -67,14 +70,36 @@ $ionicModal.fromTemplateUrl('templates/login.html', {
       $scope.oModal3 = modal;
     });
 
+    $ionicModal.fromTemplateUrl('templates/answer.html', {
+          id: '4', // We need to use and ID to identify the modal that is firing the event!
+          scope: $scope,
+          backdropClickToClose: false,
+          animation: 'slide-in-up'
+        }).then(function(modal) {
+          $scope.oModal4 = modal;
+        });
 
     $scope.openModal = function(index) {
       if (index == 1) $scope.oModal1.show();
       else if(index == 3) {
           $scope.newQuestion();
-          getAllTopics();
-          $scope.pass=randomString(1, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+          if($scope.theuser.nickname!="anonymous")
+            getAllTopics();
+          else{
+            $scope.topics=[];
+            var topic = new Topic();
+            topic.setTopicname("untopic");
+            topic.setMaintopic("untopic");
+            $scope.topics.push(topic);
+            $scope.thequestion.topicname=$scope.topics[0].getTopicname();
+          }
+          $scope.pass=randomString(5, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
           $scope.oModal3.show();
+      }
+      else if(index == 4){
+        $scope.newAnswer();
+        $scope.pass=randomString(5, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+        $scope.oModal4.show();
       }
       else $scope.oModal2.show();
     };
@@ -84,6 +109,9 @@ $ionicModal.fromTemplateUrl('templates/login.html', {
       else if(index == 3) {
         $scope.newQuestion();
         $scope.oModal3.hide();
+      }
+      else if(index == 4){
+        $scope.oModal4.hide();
       }
       else $scope.oModal2.hide();
     };
@@ -122,7 +150,6 @@ $ionicModal.fromTemplateUrl('templates/login.html', {
         //console.log(outputData);
         if(outputData[0]===true) {
           $scope.showPopupWithReload("Question has done succesfully!","Stay alert for the answers!");
-          //location.reload();
           //console.log(outputData[1]);
           //console.log(outputData[1]);
           //id,idUser,dateReview, rate,description
@@ -150,6 +177,7 @@ $ionicModal.fromTemplateUrl('templates/login.html', {
       //location.reload();
     }
 
+    $scope.test = function(){alert("test");}
     function randomString(length, chars) {
         var result = '';
         for (var i = length; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
@@ -214,9 +242,10 @@ $ionicModal.fromTemplateUrl('templates/login.html', {
         $scope.theuser.userscore=outputData[1][0].userscore;
         $scope.theuser.firstname=outputData[1][0].firstname;
         $scope.theuser.lastname=outputData[1][0].lastname;
-        $ionicHistory.nextViewOptions({
+        localStorage.setItem('user', JSON.stringify($scope.theuser));
+        /*$ionicHistory.nextViewOptions({
             disableBack: true
-          });
+          });*/
         $state.go('app.playlists');
         $scope.closeModal(1);
         //alert($scope.theuser.email);
@@ -235,11 +264,13 @@ $ionicModal.fromTemplateUrl('templates/login.html', {
   };
   $scope.logout = function(){
     $scope.newUser();
-    $ionicHistory.nextViewOptions({
+    localStorage.setItem('user', "removed");
+    /*$ionicHistory.nextViewOptions({
         disableBack: true
-      });
+      });*/
     $state.go('app.playlists');
-    $scope.openModal(1);
+    //$scope.openModal(1);
+    location.reload();
   }
 $scope.newUser();
 $scope.newQuestion();
@@ -264,6 +295,7 @@ $scope.newQuestion();
         template: msg
       });
       alertPopup.then(function(res) {
+      $state.go('app.playlists');
       location.reload();
       });
     };

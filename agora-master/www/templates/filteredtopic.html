@@ -1,0 +1,18 @@
+<ion-view>
+  <ion-nav-title>
+    <h2>{{filteredTopicToShow}}</h2>
+</ion-nav-title>
+  <ion-content>
+    <ion-list>
+      <br/>
+      <br/>
+      <ion-item ng-repeat="q in questionsFiltered" href="#/app/playlists/{{question.id}}">
+        <a ng-click="$parent.insideQuestion(q);">
+          <h2>{{question.input}}</h2>
+        <strong>Author: {{question.nickname}}</strong>
+      </a>
+      </ion-item>
+      <ion-item>{{filteredTopicToShow.topicname}}</ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

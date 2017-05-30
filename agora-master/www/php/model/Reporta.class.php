@@ -2,14 +2,14 @@
 
 /** QuestionClass.php
  * Entity QuestionClass
- * author  norosa@programmer.net
+ * author  Vath
  * version 2017/04
  */
 require_once "EntityInterface.php";
 
 class Reporta implements EntityInterface {
 
-    private $idreport;
+    private $idreporta;
     private $nickname;
     private $idanswer;
     private $reporttext;
@@ -17,7 +17,7 @@ class Reporta implements EntityInterface {
 
      //----------Data base Values---------------------------------------
     private static $tableName = "repota";
-    private static $colNameIdreport = "idreport";
+    private static $colNameIdreporta = "idreporta";
     private static $colNameNickname = "nickname";
     private static $colNameIdanswer = "idanswer";
     private static $colNameReporttext = "reporttext";
@@ -27,8 +27,8 @@ class Reporta implements EntityInterface {
         
     }
 
-    public function getIdreport() {
-        return $this->idreport;
+    public function getIdreporta() {
+        return $this->idreporta;
     }
 
     public function getNickname() {
@@ -47,8 +47,8 @@ class Reporta implements EntityInterface {
         return $this->date;
     }
 
-    public function setIdreport($idreport) {
-        $this->idreport = $idreport;
+    public function setIdreporta($idreporta) {
+        $this->idreporta = $idreporta;
     }
 
     public function setNickname($nickname) {
@@ -69,7 +69,7 @@ class Reporta implements EntityInterface {
 
     public function getAll() {
         $data = array();
-        $data["idreport"] = $this->idreport;
+        $data["idreporta"] = $this->idreporta;
         $data["nickname"] = $this->nickname;
         $data["idanswer"] = $this->idanswer;
         $data["reporttext"] = $this->reporttext;
@@ -77,8 +77,8 @@ class Reporta implements EntityInterface {
         return $data;
     }
 
-    public function setAll($idreport, $nickname, $idanswer, $reporttext, $date) {
-        $this->setIdreport($idreport);
+    public function setAll($idreporta, $nickname, $idanswer, $reporttext, $date) {
+        $this->setIdreporta($idreporta);
         $this->setReporttext($nickname);
         $this->setIdanswer($idanswer);
         $this->setReporttext($reporttext);
@@ -86,7 +86,7 @@ class Reporta implements EntityInterface {
     }
 
     /* public function toString() {
-      $toString = "Review[idreport=" . $this->idreport . "][nickname=" . $this->nickname . "][desciption=" . $this->nick . "]";
+      $toString = "Review[idreporta=" . $this->idreporta . "][nickname=" . $this->nickname . "][desciption=" . $this->nick . "]";
       return $toString;
       } */
 }

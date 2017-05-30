@@ -2,7 +2,7 @@
 
 /** UserADOClass.php
  * Entity UserADOClass
- * author  norosa@programmer.net
+ * author  Vath
  * version 2017/04
  */
 require_once "BDagora.php";

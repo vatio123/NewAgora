@@ -1,14 +1,14 @@
 function Reporta() {
     //Attributes declaration
-    this.idreport;
+    this.idreporta;
     this.nickname;
     this.idanswer;
     this.reporttext;
     this.date;
 
     //Methods declaration
-    this.construct = function (idreport, nickname, idanswer, reporttext, date){
-        this.setIdreport(idreport);
+    this.construct = function (idreporta, nickname, idanswer, reporttext, date){
+        this.setIdreporta(idreporta);
         this.setNickname(nickname);
         this.setIdanswer(idanswer);
         this.setReporttext(reporttext);
@@ -16,8 +16,8 @@ function Reporta() {
     };
 
     // Getter and setter
-    this.setIdreport = function (idreport) {
-        this.idreport = idreport;
+    this.setIdreporta = function (idreporta) {
+        this.idreporta = idreporta;
     };
     this.setNickname = function (nickname) {
         this.nickname = nickname;
@@ -32,8 +32,8 @@ function Reporta() {
         this.date = date;
     };
 
-    this.getIdreport = function () {
-        return this.idreport;
+    this.getIdreporta = function () {
+        return this.idreporta;
     };
     this.getNickname = function () {
         return this.nickname;

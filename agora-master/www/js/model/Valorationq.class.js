@@ -1,14 +1,14 @@
 function Valorationq() {
     //Attributes declaration
-    this.idvalorationa;
+    this.idvalorationq;
     this.nickname;
     this.idquestion;
     this.valoration;
     this.date;
 
     //Methods declaration
-    this.construct = function (idvalorationa, nickname, idquestion, valoration, date){
-        this.setIdvalorationa(idvalorationa);
+    this.construct = function (idvalorationq, nickname, idquestion, valoration, date){
+        this.setIdvalorationq(idvalorationq);
         this.setNickname(nickname);
         this.setIdquestion(idquestion);
         this.setValoration(valoration);
@@ -16,8 +16,8 @@ function Valorationq() {
     };
 
     // Getter and setter
-    this.setIdvalorationa = function (idvalorationa) {
-        this.idvalorationa = idvalorationa;
+    this.setIdvalorationq = function (idvalorationq) {
+        this.idvalorationq = idvalorationq;
     };
     this.setNickname = function (nickname) {
         this.nickname = nickname;
@@ -32,8 +32,8 @@ function Valorationq() {
         this.date = date;
     };
 
-    this.getIdvalorationa = function () {
-        return this.idvalorationa;
+    this.getIdvalorationq = function () {
+        return this.idvalorationq;
     };
     this.getNickname = function () {
         return this.nickname;

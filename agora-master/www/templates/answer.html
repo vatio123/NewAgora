@@ -1,27 +1,18 @@
 <ion-modal-view>
   <ion-header-bar>
-    <h1 class="title">Make your question!</h1>
-<i class="icon ion-ios-close close-modal" ng-click="registered=0;closeModal(3)"></i>
+    <h1 class="title">Make your answer!</h1>
+<i class="icon ion-ios-close close-modal" ng-click="closeModal(4)"></i>
   </ion-header-bar>
   <ion-content>
-    <form name="questionForm" ng-submit="doQuestion()" novalidate>
+    <form name="answerForm" ng-submit="doAnswer()" novalidate>
       <!--label for="topic"> Select topic: </label><br>
       <select name="multipleSelect" id="multipleSelect" ng-model="thequestion.topicName">
         <option ng-repeat="topic in topics" value="{{topic.topicname}}">{{topic.topicname}}</option>
       </select-->
-      <h2 style="margin-left:25%;margin-right:25%;" ng-if="theuser.nickname=='anonymous'">Register to gain access to all topics</h2>
           <div class="list">
-          <label class="item item-input item-select">
-            <div class="input-label">
-              Select Topic:
-            </div>
-            <select ng-model="thequestion.topicname">
-              <option ng-repeat="topic in topics" value="{{topic.topicname}}">{{topic.topicname}}</option>
-            </select>
-          </label>
           <label class="item item-input">
-            <span class="input-label">Your question</span>
-            <textarea ng-model="thequestion.input" placeholder="Ask your question here..." rows="8" cols="10" required>
+            <span class="input-label">Your answer:</span>
+            <textarea ng-model="theanswer.input" placeholder="Make your answer here..." rows="8" cols="10" required>
             </textarea>
           </label>
           <label class="item item-input">
@@ -58,6 +49,5 @@
       </div-->
     </form>
     <br/>
-
   </ion-content>
 </ion-modal-view>

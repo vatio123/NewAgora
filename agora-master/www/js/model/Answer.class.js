@@ -7,7 +7,9 @@ function Answer ()
 	this.topicname;
 	this.input;
 	this.dateIn;
-
+	this.averagevaloration;
+	this.totalvaloration;
+	this.rated=false;
 
 	//Methods declaration
 	this.construct = function (idanswer,idquestion,nickname,topicname, input,dateIn)
@@ -25,6 +27,9 @@ function Answer ()
 	this.setNickname = function (nickname){this.nickname=nickname;}
 	this.setTopicname = function (topicname){this.topicname=topicname;}
   this.setIdquestion = function (idquestion){this.idquestion = idquestion;}
+	this.setAveragevaloration = function (averagevaloration){this.averagevaloration=averagevaloration;}
+	this.setTotalvaloration = function (totalvaloration){this.totalvaloration=totalvaloration;}
+	this.setRated = function (rated){this.rated=rated;}
 
 	this.getIdanswer = function () {return this.idanswer;}
 	this.getInput = function () {return this.input;}
@@ -32,7 +37,9 @@ function Answer ()
 	this.getNickname = function () {return this.nickname;}
 	this.getTopicname = function () {return this.topicname;}
   this.getIdquestion = function() {return this.idquestion;}
-
+	this.getAveragevaloration = function () {return this.averagevaloration;}
+	this.getTotalvaloration = function () {return this.totalvaloration;}
+	this.getRated = function () {return this.rated;}
 
 	this.arrayToString = function (arrayReview)
 	{
