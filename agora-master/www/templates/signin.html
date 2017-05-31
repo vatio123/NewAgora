@@ -64,7 +64,7 @@
 
       <label class="item item-input item-stacked-label">
         <span class="input-label">Password</span>
-        <input name="password" ng-model="user.password" required type="password" placeholder="password">
+        <input name="password" ng-model="user.password" min="5" max="10" required type="password" placeholder="password">
         <div ng-show="registerForm.password.$error.required" class="advice" style="color: blue; font-size:75%">
             <span class="help-block ">Password is required.</span>
           </div>
@@ -72,7 +72,7 @@
 
       <label class="item item-input item-stacked-label">
         <span class="input-label">Repeat password</span>
-        <input ng-model="password2" type="password" placeholder="password">
+        <input ng-model="password2" type="password" min="5" max="10" placeholder="password">
         <div ng-show="user.password!=password2" style="color: blue; font-size:75%">
           <span class="help-block ">Check your password.</span>
         </div>

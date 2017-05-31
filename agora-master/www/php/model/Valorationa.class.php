@@ -2,7 +2,7 @@
 
 /** QuestionClass.php
  * Entity QuestionClass
- * author  Vath
+ * author  norosa@programmer.net
  * version 2017/04
  */
 require_once "EntityInterface.php";
@@ -21,9 +21,9 @@ class Valorationa implements EntityInterface {
     private static $colNameIdanswer = "idanswer";
     private static $colNameValoration = "valoration";
     private static $colNameDate = "date";
-    
+
     public function __construct() {
-        
+
     }
 
     public function getIdvalorationa() {
@@ -78,7 +78,7 @@ class Valorationa implements EntityInterface {
 
     public function setAll($idvalorationa, $nickname, $idanswer, $valoration, $date) {
         $this->setIdvalorationa($idvalorationa);
-        $this->setValoration($nickname);
+        $this->setNickname($nickname);
         $this->setIdanswer($idanswer);
         $this->setValoration($valoration);
         $this->setDate($date);

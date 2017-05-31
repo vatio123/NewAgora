@@ -2,7 +2,7 @@
 
 /** QuestionADOClass.php
  * Entity QuestionADOClass
- * author  Vath
+ * author  norosa@programmer.net
  * version 2017/04
  */
 require_once "EntityInterfaceADO.php";
@@ -49,7 +49,7 @@ class QuestionADO implements EntityInterface {
         //We get all the values form the query
         $idquestion = $res[QuestionADO::$colQuestionsIdQuestion];
         $nick = $res[QuestionADO::$colQuestionsNickname];
-        $topicname = $res[QuestionADO::$colQuestionsTopicname];
+        $topicName = $res[QuestionADO::$colQuestionsTopicname];
         $input = $res[QuestionADO::$colQuestionsInput];
         $date = $res[QuestionADO::$colQuestionsDate];
 
@@ -57,7 +57,7 @@ class QuestionADO implements EntityInterface {
         $entity = new Question();
         $entity->setIdquestion($idquestion);
         $entity->setNickname($nick);
-        $entity->setTopicname($topicname);
+        $entity->setTopicname($topicName);
         $entity->setInput($input);
         $entity->setDate($date);
         return $entity;
@@ -126,17 +126,6 @@ class QuestionADO implements EntityInterface {
      */
     public static function findAll() {
         $cons = "select * from `" . QuestionADO::$tableQuestions . "`";
-        $arrayValues = [];
-        return QuestionADO::findByQuery($cons, $arrayValues);
-    }
-    /**
-     * findAll()
-     * It runs a query and returns an object array
-     * @param none
-     * @return object with the query results
-     */
-       public static function llistAllReportedQuestions() {
-        $cons = "select DISTINCT questions.idquestion, questions.nickname, questions.topicname, questions.input, questions.date from questions INNER JOIN reportq ON questions.idquestion = reportq.idquestion;";
         $arrayValues = [];
         return QuestionADO::findByQuery($cons, $arrayValues);
     }

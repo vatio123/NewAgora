@@ -12,10 +12,12 @@ starterApp.controller('ManageReportQCtrl', function ($scope, accessService, $sta
     };
 
     $scope.loadInitData = function () {
+        $scope.questions = [];
         //Server conenction to verify user's data
-        var promise = accessService.getData("php/controllers/MainController.php",
+        var promise = accessService.getData("adminphp/controllers/MainController.php",
                 true, "POST", {controllerType: 2, action: 10050, jsonData: ""});
         promise.then(function (outputData) {
+            $scope.$parent.howManyQuestions = 0;
             if (outputData[0] === true) {
                 for (var i = 0; i < outputData[1].length; i++) {
                     var question = new Question();
@@ -25,6 +27,7 @@ starterApp.controller('ManageReportQCtrl', function ($scope, accessService, $sta
                     question.setInput(outputData[1][i].input);
                     question.setDateIn(outputData[1][i].date);
                     $scope.questions.push(question);
+                    $scope.$parent.howManyQuestions = $scope.$parent.howManyQuestions + 1;
                 }
             } else {
                 console.log(outputData);
@@ -37,6 +40,8 @@ starterApp.controller('ManageReportQCtrl', function ($scope, accessService, $sta
             }
         });
     };
+    alert("in mrQ");
+    $scope.$parent.reloadReports=$scope.loadInitData;
     
     if (localStorage.getItem('user') != undefined &&
             localStorage.getItem('user') != "removed") {
@@ -57,7 +62,7 @@ starterApp.controller('ManageReportQCtrl', function ($scope, accessService, $sta
    
     $scope.loadTopics = function () {
         //Server conenction to verify user's data
-        var promise = accessService.getData("php/controllers/MainController.php",
+        var promise = accessService.getData("adminphp/controllers/MainController.php",
                 true, "POST", {controllerType: 7, action: 10000, jsonData: ""});
         promise.then(function (outputData) {
             if (outputData[0] === true) {
@@ -94,13 +99,15 @@ starterApp.controller('ManageReportQCtrl', function ($scope, accessService, $sta
         console.log(question);
         $scope.question= angular.copy(question);
         //Server conenction to verify user's data
-        var promise = accessService.getData("php/controllers/MainController.php",
+        var promise = accessService.getData("adminphp/controllers/MainController.php",
                 true, "POST", {controllerType: 2, action: 10020,
                     jsonData: JSON.stringify($scope.question)});
         promise.then(function (outputData) {
             if (outputData[0] === true) {
                 $scope.showPopup("Question removed :)");
-                //loadInitData();
+                $scope.$parent.howManyQuestions = $scope.$parent.howManyQuestions - 1;
+                
+                $scope.loadInitData();
             } else {
                 if (angular.isArray(outputData[1])) {
                     console.log(outputData);
@@ -113,7 +120,7 @@ starterApp.controller('ManageReportQCtrl', function ($scope, accessService, $sta
 
     
     $scope.loadValorations = function () {
-        var promise = accessService.getData("php/controllers/MainController.php",
+        var promise = accessService.getData("adminphp/controllers/MainController.php",
                 true, "POST", {controllerType: 6, action: 10000, jsonData: ""});
         promise.then(function (outputData) {
             if (outputData[0] === true) {

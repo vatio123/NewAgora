@@ -12,8 +12,9 @@ starterApp.controller('ManageReportACtrl', function ($scope, accessService, $sta
     };
 
     $scope.loadInitData = function () {
+        $scope.answers = [];
         //Server conenction to verify user's data
-        var promise = accessService.getData("php/controllers/MainController.php",
+        var promise = accessService.getData("adminphp/controllers/MainController.php",
                 true, "POST", {controllerType: 1, action: 10060, jsonData: ""});
         promise.then(function (outputData) {
             if (outputData[0] === true) {
@@ -60,7 +61,7 @@ starterApp.controller('ManageReportACtrl', function ($scope, accessService, $sta
    
     $scope.loadTopics = function () {
         //Server conenction to verify user's data
-        var promise = accessService.getData("php/controllers/MainController.php",
+        var promise = accessService.getData("adminphp/controllers/MainController.php",
                 true, "POST", {controllerType: 7, action: 10000, jsonData: ""});
         promise.then(function (outputData) {
             if (outputData[0] === true) {
@@ -97,13 +98,13 @@ starterApp.controller('ManageReportACtrl', function ($scope, accessService, $sta
         console.log(answer);
         $scope.answer= angular.copy(answer);
         //Server conenction to verify user's data
-        var promise = accessService.getData("php/controllers/MainController.php",
+        var promise = accessService.getData("adminphp/controllers/MainController.php",
                 true, "POST", {controllerType: 1, action: 10030,
                     jsonData: JSON.stringify($scope.answer)});
         promise.then(function (outputData) {
             if (outputData[0] === true) {
                 $scope.showPopup("Answer removed :)");
-                //loadInitData();
+                $scope.loadInitData();
             } else {
                 if (angular.isArray(outputData[1])) {
                     console.log(outputData);
@@ -116,7 +117,7 @@ starterApp.controller('ManageReportACtrl', function ($scope, accessService, $sta
 
     
     $scope.loadValorations = function () {
-        var promise = accessService.getData("php/controllers/MainController.php",
+        var promise = accessService.getData("adminphp/controllers/MainController.php",
                 true, "POST", {controllerType: 6, action: 10000, jsonData: ""});
         promise.then(function (outputData) {
             if (outputData[0] === true) {

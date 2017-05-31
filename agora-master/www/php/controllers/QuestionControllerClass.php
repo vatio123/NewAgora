@@ -53,10 +53,6 @@ class QuestionControllerClass implements ControllerInterface {
             case 10040:
                 $outPutData = $this->findByPK();
                 break;
-            case 10050:
-                $outPutData = $this->llistAllReportedQuestions();
-                //$outPutData = $this->llistAll();
-                break;
             default:
                 $errors = array();
                 $outPutData[0] = false;
@@ -73,28 +69,6 @@ class QuestionControllerClass implements ControllerInterface {
         $outPutData[] = true;
         $errors = array();
         $listQuestions = QuestionADO::findAll();
-        if (count($listQuestions) == 0) {
-            $outPutData[0] = false;
-            $errors[] = "No questions found in database";
-        } else {
-            $questionsArray = array();
-
-            foreach ($listQuestions as $question) {
-                $questionsArray[] = $question->getAll();
-            }
-        }
-        if ($outPutData[0]) {
-            $outPutData[] = $questionsArray;
-        } else {
-            $outPutData[] = $errors;
-        }
-        return $outPutData;
-    }
-    private function llistAllReportedQuestions() {
-        $outPutData = array();
-        $outPutData[] = true;
-        $errors = array();
-        $listQuestions = QuestionADO::llistAllReportedQuestions();
         if (count($listQuestions) == 0) {
             $outPutData[0] = false;
             $errors[] = "No questions found in database";
@@ -143,14 +117,14 @@ class QuestionControllerClass implements ControllerInterface {
 
     private function delete() {
         //Films modification
-        $questionObj = json_decode(stripslashes($this->getJsonData()));
+        $questionsArray = json_decode(stripslashes($this->getJsonData()));
         $outPutData = array();
         $outPutData[] = true;
-            $question2 = new Question();
-            error_log(var_dump($questionObj,true));
-            //$questionObj
-            $question2->setAll($questionObj->idquestion, $questionObj->nickname, $questionObj->topicname, $questionObj->input, $questionObj->date);
-            QuestionADO::delete($question2);
+        foreach ($questionsArray as $questionObj) {
+            $question = new Question();
+            $question->setAll($questionObj->idquestion, $questionObj->nickname, $questionObj->topicname, $questionObj->input, $questionObj->date);
+            QuestionADO::delete($question);
+        }
         return $outPutData;
     }
 

@@ -9,17 +9,34 @@ starterApp.controller('AppCtrl', function($scope, $ionicModal, $timeout, $state,
   //$scope.$on('$ionicView.enter', function(e) {
   //});
 
-/****
 
 
+/*if(localStorage.getItem('user')!=undefined &&
+localStorage.getItem('user')!="removed"){
+  var usersaved=JSON.parse(localStorage.getItem('user'));
+  //nickname, userscore, firstname, lastname, email, password, postalcode
+  $scope.theuser.construct(
+    usersaved.nickname,
+    usersaved.userscore,
+    usersaved.firstname,
+    usersaved.lastname,
+    usersaved.email,
+    usersaved.password,
+    usersaved.postalcode
+  );
+
+  //alert("user found");
+}*/
 
 
-*////
   // Form data for the login modal
   //$scope.topics=[];
+  $scope.howManyAnswers = 0;
+  $scope.howManyQuestions = 0;
+  $scope.users;
+  $scope.msg="";
+  $scope.reloadFunction;
   $scope.insiderDaddy;
-  $scope.insiderMommy;
-  $scope.insiderMommyAnwsers;
   $scope.loginData = {};
   $scope.newUser = function(){
     $scope.theuser=new User();
@@ -79,6 +96,15 @@ $ionicModal.fromTemplateUrl('templates/login.html', {
           $scope.oModal4 = modal;
         });
 
+        $ionicModal.fromTemplateUrl('templates/list.html', {
+              id: '5', // We need to use and ID to identify the modal that is firing the event!
+              scope: $scope,
+              backdropClickToClose: false,
+              animation: 'slide-in-up'
+            }).then(function(modal) {
+              $scope.oModal5 = modal;
+            });
+
     $scope.openModal = function(index) {
       if (index == 1) $scope.oModal1.show();
       else if(index == 3) {
@@ -101,6 +127,12 @@ $ionicModal.fromTemplateUrl('templates/login.html', {
         $scope.pass=randomString(5, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
         $scope.oModal4.show();
       }
+      else if(index == 5){
+        $scope.ranking();
+        //$scope.newAnswer();
+        //$scope.pass=randomString(5, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+        $scope.oModal5.show();
+      }
       else $scope.oModal2.show();
     };
 
@@ -112,6 +144,9 @@ $ionicModal.fromTemplateUrl('templates/login.html', {
       }
       else if(index == 4){
         $scope.oModal4.hide();
+      }
+      else if(index == 5){
+        $scope.oModal5.hide();
       }
       else $scope.oModal2.hide();
     };
@@ -177,7 +212,16 @@ $ionicModal.fromTemplateUrl('templates/login.html', {
       //location.reload();
     }
 
-    $scope.test = function(){alert("test");}
+    $scope.trump = function(){
+      var promise = accessService.getData("https://api.whatdoestrumpthink.com/api/v1/quotes/random",
+      true, "GET", {controllerType: 0, action: 00000, jsonData: ""});
+
+      promise.then(function (outputData) {
+        console.log(outputData);
+        $scope.msg=outputData.message;
+      });
+    }
+
     function randomString(length, chars) {
         var result = '';
         for (var i = length; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
@@ -248,6 +292,7 @@ $ionicModal.fromTemplateUrl('templates/login.html', {
           });*/
         $state.go('app.playlists');
         $scope.closeModal(1);
+        location.reload();
         //alert($scope.theuser.email);
 
       }
@@ -262,16 +307,72 @@ $ionicModal.fromTemplateUrl('templates/login.html', {
       }
     });
   };
+
+
   $scope.logout = function(){
     $scope.newUser();
     localStorage.setItem('user', "removed");
     /*$ionicHistory.nextViewOptions({
         disableBack: true
       });*/
+      var promise = accessService.getData("php/controllers/MainController.php",
+      true, "POST", {controllerType: 0, action: 10040, jsonData: ""});
+
+      promise.then(function (outputData) {
+        console.log(outputData);
+        if(outputData[0] === true) {
+          console.log(outputData[1]);
+          $state.go('app.playlists');
+          $scope.closeModal(1);
+          location.reload();
+          //alert($scope.theuser.email);
+
+        }
+        else {
+          if(angular.isArray(outputData[1])) {
+            //alert(outputData[1]);
+          }
+          else {
+            alert("There has been an error in the server, try later");
+          }
+        }
+      });
+
     $state.go('app.playlists');
     //$scope.openModal(1);
     location.reload();
   }
+
+  $scope.ranking = function(){
+    $scope.users=[];
+      var promise = accessService.getData("php/getUsers.php",
+      true, "GET", {controllerType: 0, action: 10060, jsonData: ""});
+      promise.then(function(patata) {
+        //alert("succes!");
+        console.log(patata);
+        //console.log(outputData);
+        if(patata.length>0) {
+          //console.log(outputData[1]);
+          for (var i = 0; i < patata.length; i++) {
+            if(patata[i].nickname!="anonymous"){
+            var question = new User();
+            question.setNickname(patata[i].nickname);
+            question.setUserscore(patata[i].userscore);
+            $scope.users.push(question);
+          }
+          }
+         }
+        else {
+            $scope.showPopup("Oops!", "Where are the users?");
+        }
+      });
+
+    //$state.go('app.playlists');
+    //$scope.openModal(1);
+    //location.reload();
+  }
+
+//$scope.ranking();
 $scope.newUser();
 $scope.newQuestion();
   /*if(localStorage.getItem("wizard")==undefined)

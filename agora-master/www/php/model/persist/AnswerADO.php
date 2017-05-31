@@ -2,7 +2,7 @@
 
 /** AnswerADOClass.php
  * Entity AnswerADOClass
- * author  Vath
+ * author  norosa@programmer.net
  * version 2017/04
  */
 require_once "EntityInterfaceADO.php";
@@ -134,21 +134,6 @@ class AnswerADO implements EntityInterface {
         return AnswerADO::findByQuery($cons, $arrayValues);
     }
 
-
-
-     /**
-     * findAll()
-     * It runs a query and returns an object array
-     * @param none
-     * @return object with the query results
-     */
-       public static function llistAllReportedAnswers() {
-           //INSERT INTO `answers`(`idanswer`, `nickname`, `idquestion`, `input`, `date`
-        $cons = "select DISTINCT answers.idanswer, answers.nickname, answers.idquestion, answers.input, answers.date from answers INNER JOIN reporta ON answers.idanswer = reporta.idanswer;";
-        $arrayValues = [];
-        return AnswerADO::findByQuery($cons, $arrayValues);
-    }
-    
     /**
      * create()
      * insert a new row into the database
@@ -173,7 +158,7 @@ class AnswerADO implements EntityInterface {
      * delete()
      * it deletes a row from the database
      */
-    public function delete($object) {
+    public function delete($review) {
         //Connection with the database
         try {
             $conn = DBConnect::getInstance();
@@ -182,7 +167,7 @@ class AnswerADO implements EntityInterface {
             die();
         }
         $cons = "delete from `" . AnswerADO::$tableAnswers . "` where " . AnswerADO::$colAnswersIdanswer . " = ?";
-        $arrayValues = [$object->getIdanswer()];
+        $arrayValues = [$review->getIdanswer()];
         $conn->execution($cons, $arrayValues);
     }
 

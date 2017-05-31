@@ -17,22 +17,14 @@ starterApp.controller('ManageCtrl', function ($scope, accessService, $stateParam
     $scope.goToReportedAnswers = function () {
         $state.go('app.manageReportA');
     };
-    
-/*
- * 
- * TODO
- * SHOW 2 buttons with quantity of reports and answers
- * create new view for that
- * 
- * 
- */
-    
+
     $scope.loadInitData = function () {
-        alert("in loadInitData from manage");
+        $scope.answers = [];
         //Server conenction to verify user's data
-        var promise = accessService.getData("php/controllers/MainController.php",
+        var promise = accessService.getData("adminphp/controllers/MainController.php",
                 true, "POST", {controllerType: 2, action: 10050, jsonData: ""});
         promise.then(function (outputData) {
+            $scope.$parent.howManyQuestions = 0;
             if (outputData[0] === true) {
                 for (var i = 0; i < outputData[1].length; i++) {
                     var question = new Question();
@@ -42,6 +34,7 @@ starterApp.controller('ManageCtrl', function ($scope, accessService, $stateParam
                     question.setInput(outputData[1][i].input);
                     question.setDateIn(outputData[1][i].date);
                     $scope.questions.push(question);
+                    $scope.$parent.howManyQuestions = $scope.$parent.howManyQuestions + 1;
                 }
             } else {
                 console.log(outputData);
@@ -54,7 +47,7 @@ starterApp.controller('ManageCtrl', function ($scope, accessService, $stateParam
             }
         });
         alert("hello");
-        var promise = accessService.getData("php/controllers/MainController.php",
+        var promise = accessService.getData("adminphp/controllers/MainController.php",
                 true, "POST", {controllerType: 1, action: 10060, jsonData: ""});
         promise.then(function (outputData) {
             if (outputData[0] === true) {
@@ -101,7 +94,7 @@ starterApp.controller('ManageCtrl', function ($scope, accessService, $stateParam
    
     $scope.loadTopics = function () {
         //Server conenction to verify user's data
-        var promise = accessService.getData("php/controllers/MainController.php",
+        var promise = accessService.getData("adminphp/controllers/MainController.php",
                 true, "POST", {controllerType: 7, action: 10000, jsonData: ""});
         promise.then(function (outputData) {
             if (outputData[0] === true) {
@@ -138,13 +131,14 @@ starterApp.controller('ManageCtrl', function ($scope, accessService, $stateParam
         console.log(question);
         $scope.question= angular.copy(question);
         //Server conenction to verify user's data
-        var promise = accessService.getData("php/controllers/MainController.php",
+        var promise = accessService.getData("adminphp/controllers/MainController.php",
                 true, "POST", {controllerType: 2, action: 10020,
                     jsonData: JSON.stringify($scope.question)});
         promise.then(function (outputData) {
             if (outputData[0] === true) {
                 $scope.showPopup("Question removed :)");
-                //loadInitData();
+                $scope.loadInitData();
+                $scope.$parent.howManyQuestions = $scope.$parent.howManyQuestions - 1;
             } else {
                 if (angular.isArray(outputData[1])) {
                     console.log(outputData);
@@ -157,7 +151,7 @@ starterApp.controller('ManageCtrl', function ($scope, accessService, $stateParam
 
     
     $scope.loadValorations = function () {
-        var promise = accessService.getData("php/controllers/MainController.php",
+        var promise = accessService.getData("adminphp/controllers/MainController.php",
                 true, "POST", {controllerType: 6, action: 10000, jsonData: ""});
         promise.then(function (outputData) {
             if (outputData[0] === true) {
@@ -192,9 +186,7 @@ starterApp.controller('ManageCtrl', function ($scope, accessService, $stateParam
             }
         });
     }; // END loadValorations
-    $scope.test= function(){
-        alert("hello");
-    }
+
     $scope.loadInitData();
     $scope.loadTopics();
     $scope.loadValorations();

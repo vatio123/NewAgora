@@ -90,10 +90,10 @@ class ValorationaControllerClass implements ControllerInterface {
     private function create() {
         $valorationaObj = json_decode(stripslashes($this->getJsonData()));
         $valorationa = new Valorationa();
-        $valorationa->setAll(0, $valorationaObj->nickname, $valorationaObj->idanswer, $valorationaObj->valoration, $valorationaObj->date);
+        $valorationa->setAll(0, $valorationaObj->nickname, $valorationaObj->idanswer, $valorationaObj->valoration, date("Y-m-d"));
         $outPutData = array();
         $outPutData[] = true;
-        $valorationa->setValorationaId(ValorationaADO::create($valorationa));
+        $valorationa->setIdvalorationa(ValorationaADO::create($valorationa));
         //the senetnce returns de nickname of the valorationa inserted
         $outPutData[] = array($valorationa->getAll());
         return $outPutData;

@@ -12,8 +12,9 @@ starterApp.controller('InsideReportedQuestionCtrl', function ($ionicPopup, $scop
     }
 
     function loadReports() {
+        $scope.reportqs = [];
         $scope.gimmeReports = angular.copy($scope.inReportedQuestion);
-        var promise = accessService.getData("php/controllers/MainController.php",
+        var promise = accessService.getData("adminphp/controllers/MainController.php",
                 true, "POST", {controllerType: 4, action: 10060, jsonData: JSON.stringify($scope.gimmeReports)});
         promise.then(function (outputData) {
             if (outputData[0] == true) {
@@ -31,6 +32,7 @@ starterApp.controller('InsideReportedQuestionCtrl', function ($ionicPopup, $scop
                 if (angular.isArray(outputData[1])) {
                     $scope.showPopup("Amazingly it's happening!", "This question doesn't have reportqs yet!");
                     $state.go('app.manage');
+                    $scope.$parent.reloadReports();
                 } else {
                     alert("There has been an error in the server, try later");
                 }
@@ -48,13 +50,15 @@ starterApp.controller('InsideReportedQuestionCtrl', function ($ionicPopup, $scop
         $scope.reportqToDelete.push(reportq);
         $scope.reportqToDelete= angular.copy($scope.reportqToDelete);
         //Server conenction to verify user's data
-        var promise = accessService.getData("php/controllers/MainController.php",
+        var promise = accessService.getData("adminphp/controllers/MainController.php",
                 true, "POST", {controllerType: 4, action: 10030,
                     jsonData: JSON.stringify($scope.reportqToDelete)});
         promise.then(function (outputData) {
             if (outputData[0] === true) {
                 $scope.showPopup("Report removed :)");
                 loadReports();
+                $state.go('app.manage');
+                $scope.reloadReports();
             } else {
                 if (angular.isArray(outputData[1])) {
                     console.log(outputData);

@@ -1,5 +1,18 @@
-<ion-view view-title="My account">
-  <ion-content>
-    <h1>My account</h1>
+<ion-view>
+  <ion-nav-title>
+</ion-nav-title>
+  <ion-content style="text-align:center;">
+    <br/>
+    <br/>
+    <h2>This month enjoy the wisdom of D.Trump, 45th president of USA</h2>
+    <button class="button button-block button-assertive" ng-click="trump()">Generate D.Trump sentence</button>
+    <div ng-show="msg!=''" style="margin-top:10%;margin-bottom:10%";>
+    <p id="trump">{{msg}}</p>
+    <p id="trump" style="float:right;margin-right:10%;">D.Trump</p>
+  </div>
+    <h2>If you're here to check your score..</h2>
+    <h1><strong>You have {{theuser.userscore}} </strong><i class="icon ion-star"></i></h1>
+    <br/>
+    <button style="margin:0 auto;" class="button button-royal" ng-click="openModal(5)">See ranking</button>
   </ion-content>
 </ion-view>

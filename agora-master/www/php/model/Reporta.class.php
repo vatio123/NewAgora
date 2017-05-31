@@ -2,33 +2,33 @@
 
 /** QuestionClass.php
  * Entity QuestionClass
- * author  Vath
+ * author  norosa@programmer.net
  * version 2017/04
  */
 require_once "EntityInterface.php";
 
 class Reporta implements EntityInterface {
 
-    private $idreporta;
+    private $idreport;
     private $nickname;
     private $idanswer;
     private $reporttext;
     private $date;
 
      //----------Data base Values---------------------------------------
-    private static $tableName = "repota";
-    private static $colNameIdreporta = "idreporta";
+    private static $tableName = "reporta";
+    private static $colNameIdreport = "idreport";
     private static $colNameNickname = "nickname";
     private static $colNameIdanswer = "idanswer";
     private static $colNameReporttext = "reporttext";
     private static $colNameDate = "date";
-    
+
     public function __construct() {
-        
+
     }
 
-    public function getIdreporta() {
-        return $this->idreporta;
+    public function getIdreport() {
+        return $this->idreport;
     }
 
     public function getNickname() {
@@ -47,8 +47,8 @@ class Reporta implements EntityInterface {
         return $this->date;
     }
 
-    public function setIdreporta($idreporta) {
-        $this->idreporta = $idreporta;
+    public function setIdreport($idreport) {
+        $this->idreport = $idreport;
     }
 
     public function setNickname($nickname) {
@@ -69,7 +69,7 @@ class Reporta implements EntityInterface {
 
     public function getAll() {
         $data = array();
-        $data["idreporta"] = $this->idreporta;
+        $data["idreport"] = $this->idreport;
         $data["nickname"] = $this->nickname;
         $data["idanswer"] = $this->idanswer;
         $data["reporttext"] = $this->reporttext;
@@ -77,16 +77,16 @@ class Reporta implements EntityInterface {
         return $data;
     }
 
-    public function setAll($idreporta, $nickname, $idanswer, $reporttext, $date) {
-        $this->setIdreporta($idreporta);
-        $this->setReporttext($nickname);
+    public function setAll($idreport, $nickname, $idanswer, $reporttext, $date) {
+        $this->setIdreport($idreport);
+        $this->setNickname($nickname);
         $this->setIdanswer($idanswer);
         $this->setReporttext($reporttext);
         $this->setDate($date);
     }
 
     /* public function toString() {
-      $toString = "Review[idreporta=" . $this->idreporta . "][nickname=" . $this->nickname . "][desciption=" . $this->nick . "]";
+      $toString = "Review[idreport=" . $this->idreport . "][nickname=" . $this->nickname . "][desciption=" . $this->nick . "]";
       return $toString;
       } */
 }

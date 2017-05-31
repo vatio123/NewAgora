@@ -42,14 +42,14 @@
         <ion-item ng-show="theuser.getNickname()!='anonymous'" menu-close ng-click="logout()">
           LOGOUT
         </ion-item>
-        <ion-item ng-show="theuser.getNickname()!='anonymous'" menu-close href="#/app/search">
+        <ion-item ng-show="theuser.getNickname()!='anonymous'" menu-close href="#/app/my_account">
           MY ACCOUNT
-        </ion-item>
-        <ion-item ng-show="theuser.getNickname()!='admin'" menu-close href="#/app/manage">
-          Manager
         </ion-item>
         <ion-item ng-show="theuser.getNickname()=='anonymous'" menu-close href="#/app/signin">
           SIGN UP
+        </ion-item>
+        <ion-item ng-show="theuser.getNickname()!='admin'" menu-close href="#/app/manage">
+          Manager
         </ion-item>
       </ion-list>
     </ion-content>

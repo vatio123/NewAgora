@@ -2,7 +2,7 @@
 
 /** ValorationqADOClass.php
  * Entity ValorationqADOClass
- * author  Vath
+ * author  norosa@programmer.net
  * version 2017/04
  */
 require_once "EntityInterfaceADO.php";
@@ -105,7 +105,7 @@ class ValorationqADO implements EntityInterface {
         $arrayValues = [$object->getIdValorationq()];
         return ValorationqADO::findByQuery($cons, $arrayValues);
     }
-    
+
     /**
      * findByNickname()
      * It runs a query and returns an object array
@@ -143,7 +143,7 @@ class ValorationqADO implements EntityInterface {
             die();
         }
         $cons = "insert into " . ValorationqADO::$tableValorationqs . " (`nickname`,`idquestion`,`valoration`,`date`) values (?, ?, ?, ?)";
-        $arrayValues = [ $object->getNickname(), $object->getValoration(), new Date()];
+        $arrayValues = [ $object->getNickname(), $object->getIdquestion(), (int)$object->getValoration(),  date("Y-m-d")];
         $id = $conn->executionInsert($cons, $arrayValues);
         $object->setIdvalorationq($id);
         return $object->getIdValorationq();

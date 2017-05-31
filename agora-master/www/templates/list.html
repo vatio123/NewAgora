@@ -1,0 +1,14 @@
+<ion-modal-view>
+    <ion-header-bar>
+      <h1 class="title">Ranking</h1>
+    <i class="icon ion-ios-close close-modal" ng-click="closeModal(5)"></i>
+    </ion-header-bar>
+    <ion-content>
+    <ion-list>
+        <ion-item ng-repeat="user in users">
+          <p>#{{$index+1}} </p>
+            <h2><i ng-if="$index<3" class="icon ion-trophy"></i> {{user.nickname}} <i class="icon ion-star"></i><strong>{{user.userscore}}</strong></h2>
+        </ion-item>
+      </ion-list>
+  </ion-content>
+</ion-modal-view>

@@ -81,6 +81,6 @@ if (isset($_REQUEST['controllerType'])) {
     error_log("MainControllerClass: action does not exist");
     $outPutData[] = $errors;
 }
-
+            //error_log(print_r($outPutData,true));
 echo json_encode($outPutData);
 ?>

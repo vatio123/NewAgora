@@ -63,9 +63,6 @@ class UserControllerClass implements ControllerInterface {
             case 10070:
                 $outPutData = $this->findByPK();
                 break;
-            case 10080:
-                $outPutData = $this->llistAll();
-                break;
             default:
                 $errors = array();
                 $outPutData[0] = false;
@@ -85,6 +82,29 @@ class UserControllerClass implements ControllerInterface {
         $user = new User();
         $user->setAll($userObj->nickname, 0, null, null, null, null, null);
         $outPutData[1]=UserADO::findByNickname($user);
+        return $outPutData;
+    }
+
+    private function llistAll() {
+        $outPutData = array();
+        $outPutData[] = true;
+        $errors = array();
+        $listQuestions = UserADO::findAll();
+        if (count($listQuestions) == 0) {
+            $outPutData[0] = false;
+            $errors[] = "No questions found in database";
+        } else {
+            $questionsArray = array();
+
+            foreach ($listQuestions as $question) {
+                $questionsArray[] = $question->getAll();
+            }
+        }
+        if ($outPutData[0]) {
+            $outPutData[] = $questionsArray;
+        } else {
+            $outPutData[] = $errors;
+        }
         return $outPutData;
     }
 

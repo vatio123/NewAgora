@@ -17,12 +17,14 @@ starterApp.controller('PlaylistsCtrl', function($scope, accessService, $statePar
 
 
   $scope.loadInitData = function (){
+	  $scope.questions=[];
     //Server conenction to verify user's data
     var promise = accessService.getData("php/controllers/MainController.php",
     true, "POST", {controllerType: 2, action: 10000, jsonData: ""});
 
     promise.then(function (outputData) {
       //alert("con done");
+      //console.log(outputData);
       if(outputData[0] === true) {
         //console.log(outputData[1]);
         //console.log(outputData[1]);
@@ -48,6 +50,9 @@ starterApp.controller('PlaylistsCtrl', function($scope, accessService, $statePar
       }
     });
   }
+
+
+
     if(localStorage.getItem('user')!=undefined &&
     localStorage.getItem('user')!="removed"){
       var usersaved=JSON.parse(localStorage.getItem('user'));
@@ -69,9 +74,10 @@ starterApp.controller('PlaylistsCtrl', function($scope, accessService, $statePar
       $scope.test = function(name){
         //console.log($scope.selectedTopic);
         ///alert(name);
+        $scope.questions=[];
         if(name!="All"){
           //alert(name);
-        $scope.questions=[];
+
         var promise = accessService.getData("php/controllers/MainController.php",
         true, "POST", {controllerType: 2, action: 10000, jsonData: ""});
         promise.then(function (outputData) {
@@ -84,7 +90,7 @@ starterApp.controller('PlaylistsCtrl', function($scope, accessService, $statePar
             for (var i = 0; i < outputData[1].length; i++) {
               //alert(name+" "+outputData[1][i].topicname);
               if(outputData[1][i].topicname==name){
-                console.log(name+" "+outputData[1][i].topicname);
+                //console.log(name+" "+outputData[1][i].topicname);
               var question = new Question();
               question.setIdquestion(outputData[1][i].idquestion);
               question.setNickname(outputData[1][i].nickname);
@@ -95,6 +101,7 @@ starterApp.controller('PlaylistsCtrl', function($scope, accessService, $statePar
               $scope.questions.push(question);
             }
             }
+            $scope.loadValorations();
           }
           else {
             console.log(outputData);
@@ -109,10 +116,12 @@ starterApp.controller('PlaylistsCtrl', function($scope, accessService, $statePar
       }
       else {
         $scope.loadInitData();
+        $scope.loadValorations();
       }
     }
 
       $scope.loadTopics = function (){
+		  $scope.topics=[];
         //Server conenction to verify user's data
         var promise = accessService.getData("php/controllers/MainController.php",
         true, "POST", {controllerType: 7, action: 10000, jsonData: ""});
@@ -148,6 +157,7 @@ starterApp.controller('PlaylistsCtrl', function($scope, accessService, $statePar
       }
 
       $scope.loadValorations = function(){
+        $scope.valorationsq=[];
         var promise = accessService.getData("php/controllers/MainController.php",
         true, "POST", {controllerType: 6, action: 10000, jsonData: ""});
 
@@ -165,22 +175,32 @@ starterApp.controller('PlaylistsCtrl', function($scope, accessService, $statePar
               $scope.valorationsq.push(valoration);
             }
             console.log($scope.valorationsq);
+            //console.log("_________________bucle init____________________________");
             for(var i=0; i<$scope.questions.length;i++){
               var acumVal=0;
               for(var j=0; j<$scope.valorationsq.length; j++){
+
                 if($scope.questions[i].idquestion==$scope.valorationsq[j].idquestion){
+                  //console.log("entro "+j);
+                  //console.log("INICIO primera pregunta____________________________");
                   acumVal+=parseInt($scope.valorationsq[j].valoration);
+                  //console.log("sumando: "+$scope.valorationsq[j].valoration);
+                  //console.log("valoration: "+$scope.valorationsq[j].nickname);
+                  //console.log("FIN primera pregunta____________________________");
                 }
-                if($scope.valorationsq[j].nickname==$scope.$parent.theuser.nickname &&
-                $scope.valorationsq[j].idquestion==$scope.questions[i].idquestion){
+                if(($scope.valorationsq[j].nickname==$scope.$parent.theuser.nickname &&
+                $scope.valorationsq[j].idquestion==$scope.questions[i].idquestion)||
+                $scope.questions[i].nickname==$scope.$parent.theuser.nickname){
                   $scope.questions[i].setRated(true);
-                  console.log($scope.questions[i]);
+                  //console.log($scope.questions[i]);
                 }
-                console.log("the user->"+$scope.$parent.theuser.nickname);
-                console.log("valoration->"+$scope.valorationsq[j].nickname);
+
+                //console.log("the user->"+$scope.$parent.theuser.nickname);
+                //console.log("valoration->"+$scope.valorationsq[j].nickname);
               }
               $scope.questions[i].setTotalvaloration(acumVal);
             }
+            console.log("_______________bucle fin____________________________");
           }
           else {
             console.log(outputData);
@@ -193,7 +213,16 @@ starterApp.controller('PlaylistsCtrl', function($scope, accessService, $statePar
           }
         });
       }
+
+      function loadAll(){
+        $scope.loadInitData();
+        $scope.loadTopics();
+        $scope.loadValorations();
+      }
+
     $scope.loadInitData();
     $scope.loadTopics();
     $scope.loadValorations();
+    $scope.$parent.reloadFunction=loadAll;
+
 });

@@ -12,9 +12,9 @@ starterApp.controller('InsideReportedAnswerCtrl', function ($ionicPopup, $scope,
     }
 
     function loadReports() {
-        
+        $scope.reportas = [];
         $scope.gimmeReports = angular.copy($scope.inReportedAnswer);
-        var promise = accessService.getData("php/controllers/MainController.php",
+        var promise = accessService.getData("adminphp/controllers/MainController.php",
                 true, "POST", {controllerType: 3, action: 10060, jsonData: JSON.stringify($scope.gimmeReports)});
         promise.then(function (outputData) {
             if (outputData[0] == true) {
@@ -32,6 +32,7 @@ starterApp.controller('InsideReportedAnswerCtrl', function ($ionicPopup, $scope,
                 if (angular.isArray(outputData[1])) {
                     $scope.showPopup("Amazingly it's happening!", "This answer doesn't have reportas yet!");
                     $state.go('app.manage');
+                    $scope.$parent.reloadReports();
                 } else {
                     alert("There has been an error in the server, try later");
                 }
@@ -49,7 +50,7 @@ starterApp.controller('InsideReportedAnswerCtrl', function ($ionicPopup, $scope,
         $scope.reportaToDelete.push(reporta);
         $scope.reportaToDelete= angular.copy($scope.reportaToDelete);
         //Server conenction to verify user's data
-        var promise = accessService.getData("php/controllers/MainController.php",
+        var promise = accessService.getData("adminphp/controllers/MainController.php",
                 true, "POST", {controllerType: 3, action: 10030,
                     jsonData: JSON.stringify($scope.reportaToDelete)});
         promise.then(function (outputData) {

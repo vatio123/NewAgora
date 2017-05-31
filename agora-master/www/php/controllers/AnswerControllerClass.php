@@ -53,9 +53,6 @@ class AnswerControllerClass implements ControllerInterface {
             case 10050:
                 $outPutData = $this->findByQuestionId();
                 break;
-            case 10060:
-                $outPutData = $this->llistAllReportedAnswers();
-                break;
             default:
                 $errors = array();
                 $outPutData[0] = false;
@@ -89,28 +86,6 @@ class AnswerControllerClass implements ControllerInterface {
         }
         return $outPutData;
     }
-    private function llistAllReportedAnswers() {
-        $outPutData = array();
-        $outPutData[] = true;
-        $errors = array();
-        $listQuestions = AnswerADO::llistAllReportedAnswers();
-        if (count($listQuestions) == 0) {
-            $outPutData[0] = false;
-            $errors[] = "No questions found in database";
-        } else {
-            $questionsArray = array();
-
-            foreach ($listQuestions as $question) {
-                $questionsArray[] = $question->getAll();
-            }
-        }
-        if ($outPutData[0]) {
-            $outPutData[] = $questionsArray;
-        } else {
-            $outPutData[] = $errors;
-        }
-        return $outPutData;
-    }
 
     private function create() {
         $answerObj = json_decode(stripslashes($this->getJsonData()));
@@ -138,18 +113,17 @@ class AnswerControllerClass implements ControllerInterface {
     }
 
     private function delete() {
-        $answerObj = json_decode(stripslashes($this->getJsonData()));
+        //Films modification
+        $answersArray = json_decode(stripslashes($this->getJsonData()));
         $outPutData = array();
         $outPutData[] = true;
-        $answer = new Answer();
-        $answer->setAll($answerObj->idanswer, null, 0, null, null);
-        AnswerADO::delete($answer);
+        foreach ($answersArray as $answerObj) {
+            $answer = new Answer();
+            $answer->setAll($answerObj->nickname, $answerObj->idquestion, $answerObj->input, $answerObj->date);
+            AnswerADO::delete($answer);
+        }
         return $outPutData;
     }
-    
-
-
-
 
     private function findByQuestionId() {
         //Films modification

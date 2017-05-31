@@ -1,7 +1,7 @@
 <?php
 /** applyClass.php
 * Entity applyClass
-* author  Vath
+* author  norosa@programmer.net
 * version 2017/04
 */
 require_once "BDvideoclub.php";

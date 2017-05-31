@@ -2,14 +2,14 @@
 
 /** UserADOClass.php
  * Entity UserADOClass
- * author  Vath
+ * author  norosa@programmer.net
  * version 2017/04
  */
 require_once "BDagora.php";
 require_once "EntityInterfaceADO.php";
 require_once "../model/User.class.php";
 
-class UserADO implements EntityInterfaceADO {
+class UserADO implements EntityInterface {
 
     //----------Data base Values---------------------------------------
     private static $tableName = "users";
@@ -29,18 +29,17 @@ class UserADO implements EntityInterfaceADO {
      * @param res query to execute
      * @return objects collection
      */
-    public static function fromResultSetList($res) {
-        $entityList = array();
-        $i = 0;
-        //while ( ($row = $res->fetch_array(MYSQLI_BOTH)) != NULL ) {
-        foreach ($res as $row) {
-            //We get all the values an add into the array
-            $entity = UserADO::fromResultSet($row);
-            $entityList[$i] = $entity;
-            $i++;
-        }
-        return $entityList;
-    }
+     private static function fromResultSetList($res) {
+         $entityList = array();
+         $i = 0;
+         foreach ($res as $row) {
+             //We get all the values an add into the array
+             $entity = UserADO::fromResultSet($row);
+             $entityList[$i] = $entity;
+             $i++;
+         }
+         return $entityList;
+     }
 
     /**
      * fromResultSet()
@@ -48,7 +47,7 @@ class UserADO implements EntityInterfaceADO {
      * @param res ResultSet del qual obtenir dades
      * @return object
      */
-    public static function fromResultSet($res) {
+    private static function fromResultSet($res) {
         //We get all the values form the query
         $nickname = $res[UserADO::$colNameNickname];
         $userscore = $res[UserADO::$colNameUserscore];

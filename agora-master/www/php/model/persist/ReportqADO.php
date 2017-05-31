@@ -2,7 +2,7 @@
 
 /** ReportqADOClass.php
  * Entity ReportqADOClass
- * author  Vath
+ * author  norosa@programmer.net
  * version 2017/04
  */
 require_once "EntityInterfaceADO.php";
@@ -17,7 +17,7 @@ class ReportqADO implements EntityInterface {
     private $date;*/
     //----------Data base Values---------------------------------------
     private static $tableReportqs = "reportq";
-    private static $colReportqsIdreport = "idreportq";
+    private static $colReportqsIdreport = "idreport";
     private static $colReportqsNickname = "nickname";
     private static $colReportqsIdquestion = "idquestion";
     private static $reporttextcolReportqsReporttext = "reporttext";
@@ -94,7 +94,7 @@ class ReportqADO implements EntityInterface {
      */
     public static function findByPK($object) {
         $cons = "select * from `" . ReportqADO::$tableReportqs . "` where " . ReportqADO::$colReportqsIdreport . " = ?";
-        $arrayValues = [$object->getIdquestion()];
+        $arrayValues = [$object->getIdreport()];
         return ReportqADO::findByQuery($cons, $arrayValues);
     }
 
@@ -104,24 +104,12 @@ class ReportqADO implements EntityInterface {
      * @param name
      * @return object with the query results
      */
-    public static function findByQuestionId($object) {
-        $cons = "select * from `" . ReportqADO::$tableReportqs . "` where " . ReportqADO::$colReportqsIdquestion . " = ?";
-        $arrayValues = [$object->getIdquestion()];
+    public static function findByIdreport($object) {
+        $cons = "select * from `" . ReportqADO::$tableReportqs . "` where " . ReportqADO::$colReportqsIdreport . " = ?";
+        $arrayValues = [$object->getIdreport()];
         return ReportqADO::findByQuery($cons, $arrayValues);
     }
-    
-    /**
-     * findByIdreport()
-     * It runs a query and returns an object array
-     * @param name
-     * @return object with the query results
-     */
-    public static function findByIdquestion($object) {
-        $cons = "select * from `" . ReportqADO::$tableReportqs . "` where " . ReportqADO::$colReportqsIdquestion. " = ?";
-        $arrayValues = [$object->getIdquestion()];
-        return ReportqADO::findByQuery($cons, $arrayValues);
-    }
-    
+
     /**
      * findByNickname()
      * It runs a query and returns an object array
@@ -159,7 +147,7 @@ class ReportqADO implements EntityInterface {
             die();
         }
         $cons = "insert into " . ReportqADO::$tableReportqs . " (`nickname`,`idquestion`,`reporttext`,`date`) values (?, ?, ?, ?)";
-        $arrayValues = [ $object->getNickname(), $object->getIdquestion(), $object->getReporttext(), new Date()];
+        $arrayValues = [ $object->getNickname(), $object->getIdquestion(), $object->getReporttext(), date("Y-m-d")];
         $id = $conn->executionInsert($cons, $arrayValues);
         $object->setIdreport($id);
         return $object->getIdreport();

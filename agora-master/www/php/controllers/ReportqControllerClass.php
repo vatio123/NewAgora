@@ -38,23 +38,20 @@ class ReportqControllerClass implements ControllerInterface {
         $outPutData = array();
 
         switch ($this->getAction()) {
-            case 10010:
+            case 10000:
                 $outPutData = $this->llistAll();
                 break;
-            case 10020:
+            case 10100:
                 $outPutData = $this->create();
                 break;
-            case 10030:
+            case 10000:
                 $outPutData = $this->delete();
                 break;
-            case 10040:
+            case 10000:
                 $outPutData = $this->update();
                 break;
-            case 10050:
+            case 10000:
                 $outPutData = $this->findByPK();
-                break;
-            case 10060:
-                $outPutData = $this->findByQuestionId();
                 break;
             default:
                 $errors = array();
@@ -97,10 +94,10 @@ class ReportqControllerClass implements ControllerInterface {
     private function create() {
         $reportqObj = json_decode(stripslashes($this->getJsonData()));
         $reportq = new Reportq();
-        $reportq->setAll(0, $reportqObj->nickname, $reportqObj->idquestion, $reportqObj->reporttext, $reportqObj->date);
+        $reportq->setAll(0, $reportqObj->nickname, $reportqObj->idquestion, $reportqObj->reporttext, date("Y-m-d"));
         $outPutData = array();
         $outPutData[] = true;
-        $reportq->setReportqId(ReportqADO::create($reportq));
+        $reportq->setIdreport(ReportqADO::create($reportq));
         //the senetnce returns de nickname of the reportq inserted
         $outPutData[] = array($reportq->getAll());
         return $outPutData;
@@ -147,34 +144,7 @@ class ReportqControllerClass implements ControllerInterface {
         return $outPutData;
     }
 
-        private function findByQuestionId() {
-        $reportqObj = json_decode(stripslashes($this->getJsonData()));
-        $outPutData = array();
-        $outPutData[] = true;
-        $errors = array();
-        $reportq = new Reportq();
-        $reportq->setAll(0, null, $reportqObj->idquestion, null, date("Y-m-d"));
-        $listReportqs = ReportqADO::findByQuestionId($reportq);
-        if (count($listReportqs) == 0) {
-            $outPutData[0] = false;
-            $errors[] = "No reportqs found in database";
-        } else {
-            $reportqsArray = array();
 
-            foreach ($listReportqs as $reportq) {
-                $reportqsArray[] = $reportq->getAll();
-            }
-        }
-        if ($outPutData[0]) {
-            $outPutData[] = $reportqsArray;
-        } else {
-            $outPutData[] = $errors;
-        }
-        return $outPutData;
-    }
-    
-
-    
 }
 
 ?>

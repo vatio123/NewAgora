@@ -1,30 +1,35 @@
 <ion-view>
   <ion-nav-title>
-    <h2>ΑΓΟΡΑ</h2>
 </ion-nav-title>
   <ion-content>
       <br/>
       <br/>
-    <label class="item" style="text-align:center;"><strong>SELECT TOPIC</strong></label>
-    <ion-list>
-      <ion-radio style="text-align:center;" ng-model="$parent.selectedTopic" ng-change="test(topic.topicname)" ng-repeat="topic in topics" ng-value="topic.topicname">{{topic.topicname}}</ion-radio>
-    </ion-list>
+      <div>
+    <label class="item item-input item-stacked-label" style="text-align:center;"><strong>SELECT TOPIC</strong></label>
+      <ion-radio
+      style="text-align:center;float:left;width:50%;"
+      ng-model="$parent.selectedTopic"
+      ng-change="test(topic.topicname)"
+      ng-repeat="topic in topics"
+      ng-value="topic.topicname">{{topic.topicname}}</ion-radio>
+      <button style="width:50%;color:white;" class="button button-dark" onclick="location.reload()">Reload Questions!</button>
+    </div>
 <!-- stack over flow
 <div ng-controller="DynamicCtrl">
     <input type="radio" ng-model="$parent.lunch" ng-repeat="m in meat"
     ng-value="m" name="lunch">
     {{lunch}}
 </div>
--->
-    <label class = "item item-input">
-    <strong>Order by ...</strong>
-    <select class="item select" name="filterq" ng-model="theFilter">
+--> <br/>
+    <label class="item item-input item-select item-positive" style="width:80%;margin:auto;">
+      <strong>Order By...</strong>
+    <select class="" name="filterq" ng-model="theFilter">
       <option value="nickname">Nickname</option>
       <option value="date">Date</option>
       <option value="topicname">Topic</option>
       <option value="totalvaloration">Score</option>
     </select>
-  </label>
+    </label>
   <br/>
   <ion-list>
       <ion-item ng-repeat="question in questions | orderBy: theFilter:true" href="#/app/playlists/{{question.id}}">
