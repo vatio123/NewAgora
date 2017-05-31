@@ -7,6 +7,10 @@
 require_once "ControllerInterface.php";
 require_once "../model/Valorationa.class.php";
 require_once "../model/persist/ValorationaADO.php";
+require_once "../model/User.class.php";
+require_once "../model/persist/UserADO.php";
+require_once "../model/Answer.class.php";
+require_once "../model/persist/AnswerADO.php";
 
 class ValorationaControllerClass implements ControllerInterface {
 
@@ -87,10 +91,40 @@ class ValorationaControllerClass implements ControllerInterface {
         return $outPutData;
     }
 
-    private function create() {
+    /*private function create() {
         $valorationaObj = json_decode(stripslashes($this->getJsonData()));
         $valorationa = new Valorationa();
         $valorationa->setAll(0, $valorationaObj->nickname, $valorationaObj->idanswer, $valorationaObj->valoration, date("Y-m-d"));
+        $outPutData = array();
+        $outPutData[] = true;
+        $valorationa->setIdvalorationa(ValorationaADO::create($valorationa));
+        //the senetnce returns de nickname of the valorationa inserted
+        $outPutData[] = array($valorationa->getAll());
+        return $outPutData;
+    }*/
+    
+    private function create() {
+        $valorationaObj = json_decode(stripslashes($this->getJsonData()));
+        $valorationa = new Valorationa();
+        $valorationa->setAll(0, $valorationaObj->nickname, $valorationaObj->idanswer, $valorationaObj->valoration, $valorationaObj->date);
+        
+        //
+        $answer = new Answer();
+        //$idanswer, $nickname, $idquestion, $input, $date
+        $answer->setAll($valorationaObj->idanswer, null, null, null, null);
+        $answer2 = AnswerADO::findByIdanswer($answer);
+        //
+        $user = new User();
+        $user->setUser($answer2[0]->getNickname(), 0, null, null, null, null, 0);
+  
+        $user2 = new User();
+        $userObj = UserADO::findByNickname($user);
+        $user2->setUser($userObj[0]->getNickname(), $userObj[0]->getUserscore() + $valorationaObj->valoration, $userObj[0]->getFirstname(), $userObj[0]->getLastname(), $userObj[0]->getEmail(), $userObj[0]->getPassword(), $userObj[0]->getPostalcode());
+        //$user2->setUser($user2->nickname, $user2->userscore + $valorationaObj->valoration, $user2->firstname, $user2->lastname, $user2->email, $user2->password, $user2->postalcode);
+        $user2->setUser($user2->getNickname(), $user2->getUserscore() + $valorationaObj->valoration, $user2->getFirstname(), $user2->getLastname(), $user2->getEmail(), $user2->getPassword(), $user2->getPostalcode());
+        UserADO::update2($user2);
+        //take score + x
+        //
         $outPutData = array();
         $outPutData[] = true;
         $valorationa->setIdvalorationa(ValorationaADO::create($valorationa));

@@ -201,6 +201,22 @@ class UserADO implements EntityInterface {
         $arrayValues = [$user->getUserscore(), $user->getFirstname(), $user->getLastname(), $user->getEmail(), $user->getPassword(), $user->getPostalcode()];
         $conn->execution($cons, $arrayValues);
     }
+    /**
+     * update()
+     * it updates a row of the database
+     */
+    public function update2($user) {
+        //Connection with the database
+        try {
+            $conn = DBConnect::getInstance();
+        } catch (PDOException $e) {
+            print "Error connecting database: " . $e->getMessage() . " ";
+            die();
+        }
+        $cons = "update `" . UserADO::$tableName . "` set " . UserADO::$colNameUserscore . " = ? where nickname = ? " ;
+        $arrayValues = [$user->getUserscore(), $user->getNickname()];
+        $conn->execution($cons, $arrayValues);
+    }
 
 }
 

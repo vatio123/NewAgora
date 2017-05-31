@@ -143,7 +143,7 @@ class ValorationaADO implements EntityInterface {
             die();
         }
         $cons = "insert into " . ValorationaADO::$tableValorationas . " (`nickname`,`idanswer`,`valoration`,`date`) values (?, ?, ?, ?)";
-        $arrayValues = [ $object->getNickname(), $object->getIdanswer(), (int)$object->getValoration(), date("Y-m-d")];
+        $arrayValues = [ $object->getNickname(), (int)$object->getIdanswer(), (int)$object->getValoration(), date("Y-m-d")];
         $id = $conn->executionInsert($cons, $arrayValues);
         $object->setIdvalorationa($id);
         return $object->getIdValorationa();

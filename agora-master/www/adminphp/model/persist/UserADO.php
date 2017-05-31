@@ -192,6 +192,7 @@ class UserADO implements EntityInterfaceADO {
      */
     public function update($user) {
         //Connection with the database
+        var_dump($user);
         try {
             $conn = DBConnect::getInstance();
         } catch (PDOException $e) {
@@ -202,6 +203,8 @@ class UserADO implements EntityInterfaceADO {
         $arrayValues = [$user->getUserscore(), $user->getFirstname(), $user->getLastname(), $user->getEmail(), $user->getPassword(), $user->getPostalcode()];
         $conn->execution($cons, $arrayValues);
     }
+    
+    
 
 }
 

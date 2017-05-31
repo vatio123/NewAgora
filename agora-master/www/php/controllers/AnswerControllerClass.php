@@ -131,7 +131,7 @@ class AnswerControllerClass implements ControllerInterface {
         $outPutData = array();
         $outPutData[] = true;
         $answer = new Answer();
-        $answer->setAll(0,"nickname", $questionObj->idquestion, "input", "date");
+        $answer->setAll(0,"nickname", $questionObj->idquestion, "input", null);
         $listAnswers = AnswerADO::findByQuestionId($answer);
         if (count($listAnswers) == 0) {
             $outPutData[0] = false;

@@ -6,7 +6,9 @@
  */
 require_once "ControllerInterface.php";
 require_once "../model/Valorationa.class.php";
+require_once "../model/User.class.php";
 require_once "../model/persist/ValorationaADO.php";
+require_once "../model/persist/UserADO.php";
 
 class ValorationaControllerClass implements ControllerInterface {
 
@@ -91,6 +93,16 @@ class ValorationaControllerClass implements ControllerInterface {
         $valorationaObj = json_decode(stripslashes($this->getJsonData()));
         $valorationa = new Valorationa();
         $valorationa->setAll(0, $valorationaObj->nickname, $valorationaObj->idanswer, $valorationaObj->valoration, $valorationaObj->date);
+        //
+        $user = new User();
+        $user->setNickname($valorationaObj->nickname, 0, null, null, null, null, null);
+        var_dump($user);
+        $user2 = new User();
+        $user2->setUser(UserADO::findByNickname($user));
+        $user2->setUser($user2->nickname, $user2->serscore + $valorationaObj->valoration, $user2->firstname, $user2->lastname, $user2->email, $user2->password, $user2->postalcode);
+        UserADO::update($user2);
+        //take score + x
+        //
         $outPutData = array();
         $outPutData[] = true;
         $valorationa->setValorationaId(ValorationaADO::create($valorationa));

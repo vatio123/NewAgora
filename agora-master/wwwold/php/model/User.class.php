@@ -107,6 +107,15 @@ class User implements EntityInterface {
         $this->setPassword($password);
         $this->setPostalcode($postalcode);
     }
+    public function setUser($nickname, $userscore, $firstname, $lastname, $email, $password, $postalcode) {
+        $this->setNickname($nickname);
+        $this->setUserscore($userscore);
+        $this->setFirstname($firstname);
+        $this->setLastname($lastname);
+        $this->setEmail($email);
+        $this->setPassword($password);
+        $this->setPostalcode($postalcode);
+    }
 
     /* public function toString() {
       $toString = "User[nickname=" . $this->nickname . "][userscore=" . $this->getUserscore() . "][firstname=" . $this->getFirstname() . "][email=" . $this->email . "][email=" . $this->mail . "]";
